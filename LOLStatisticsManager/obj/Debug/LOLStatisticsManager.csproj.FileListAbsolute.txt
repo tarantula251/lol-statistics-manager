@@ -1,0 +1,3 @@
+C:\Users\justy\source\repos\LOLStatisticsManager\LOLStatisticsManager\obj\Debug\LOLStatisticsManager.csprojAssemblyReference.cache
+C:\Users\justy\source\repos\LOLStatisticsManager\LOLStatisticsManager\obj\Debug\App.g.cs
+C:\Users\justy\source\repos\LOLStatisticsManager\LOLStatisticsManager\obj\Debug\LOLStatisticsManager_MarkupCompile.cache
