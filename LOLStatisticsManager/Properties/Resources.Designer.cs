@@ -59,5 +59,14 @@ namespace LOLStatisticsManager.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RGAPI-a5c039ae-c083-4b54-95cb-9b3643e03985.
+        /// </summary>
+        internal static string RiotAPIKey {
+            get {
+                return ResourceManager.GetString("RiotAPIKey", resourceCulture);
+            }
+        }
     }
 }
