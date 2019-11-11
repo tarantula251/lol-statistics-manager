@@ -27,6 +27,7 @@
             </Grid>
         </ScrollViewer>
         <Button Content="Button" HorizontalAlignment="Left" Margin="-267,-44,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="summonerDataTextBlock" HorizontalAlignment="Left" Height="156" Margin="358,168,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="205" Foreground="White"/>
 
 
     </Grid>

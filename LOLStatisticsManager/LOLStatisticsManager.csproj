@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\RiotAPIController.cs" />
     <Compile Include="Model\API\RiotAPI.cs" />
     <Compile Include="Model\API\Summoner_V4.cs" />
     <Compile Include="Model\SummonerDTO.cs" />
