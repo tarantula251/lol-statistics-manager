@@ -17,5 +17,11 @@ namespace LOLStatisticsManager.Controller
             Summoner_V4 summoner_V4 = new Summoner_V4(Region);
             return summoner_V4.GetSummonerByName(summonerName);
         }
+
+        public LeagueEntryDTOCollection GetEntryBySummoner(string summonerId)
+        {
+            League_V4 league_V4 = new League_V4(Region);
+            return league_V4.GetEntryBySummoner(summonerId);
+        }
     }
 }

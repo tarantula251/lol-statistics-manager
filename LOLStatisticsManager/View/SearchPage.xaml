@@ -14,7 +14,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="searchBox" Margin="0,0,24,0" MinHeight="60" MaxHeight="60" VerticalAlignment="Top" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontSize="24" Foreground="White" Text=" fdgsdwerwe" Padding="10,10,0,0" TextChanged="searchBox_TextChanged">
+            <TextBox x:Name="searchBox" Margin="0,0,24,0" MinHeight="60" MaxHeight="60" VerticalAlignment="Top" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontSize="24" Foreground="White" Padding="10,10,0,0" TextChanged="searchBox_TextChanged">
                 <TextBox.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF4BE4F3" Offset="0"/>
@@ -27,7 +27,7 @@
             <TextBlock FontWeight="Bold" FontSize="24" Foreground="White">SEARCH</TextBlock>
         </Button>
         <StackPanel Margin="526,236,67.6,59.4">
-            <ListBox x:Name="listBox" ItemsSource="{Binding Localizations}" SelectedItem="{Binding selectedCountry, Mode=TwoWay}" Background="#FF9BEBF7" Foreground="#FF1F1B74" ScrollViewer.CanContentScroll="False" Height="125" Margin="0,0,2,0" RenderTransformOrigin="0.5,0.5" FontSize="24" SelectionChanged="listBox_SelectionChanged" />
+            <ListBox x:Name="listBox" ItemsSource="{Binding Localizations}" SelectedItem="{Binding SelectedCountry, Mode=TwoWay}" Background="#FF9BEBF7" Foreground="#FF1F1B74" ScrollViewer.CanContentScroll="False" Height="125" Margin="0,0,2,0" RenderTransformOrigin="0.5,0.5" FontSize="24" SelectionChanged="listBox_SelectionChanged" SelectedIndex="0"/>
         </StackPanel>
         <TextBlock x:Name="labelLocation" HorizontalAlignment="Left" Height="39" Margin="526,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Foreground="White" FontSize="20" Text="Select server location:"></TextBlock>
         <TextBlock x:Name="labelUsername" HorizontalAlignment="Left" Height="39" Margin="38,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Foreground="White" FontSize="20" Text="Type username:"/>
