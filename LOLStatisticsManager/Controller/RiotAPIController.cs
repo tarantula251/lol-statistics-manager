@@ -1,4 +1,5 @@
-﻿using LOLStatisticsManager.Model;
+﻿using System.Collections.Generic;
+using LOLStatisticsManager.Model;
 using LOLStatisticsManager.Model.API;
 
 namespace LOLStatisticsManager.Controller
@@ -18,7 +19,7 @@ namespace LOLStatisticsManager.Controller
             return summoner_V4.GetSummonerByName(summonerName);
         }
 
-        public LeagueEntryDTOCollection GetEntryBySummoner(string summonerId)
+        public List<LeagueEntryDTO> GetEntryBySummoner(string summonerId)
         {
             League_V4 league_V4 = new League_V4(Region);
             return league_V4.GetEntryBySummoner(summonerId);

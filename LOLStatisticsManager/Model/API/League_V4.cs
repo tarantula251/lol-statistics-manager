@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace LOLStatisticsManager.Model.API
 {
@@ -9,7 +10,7 @@ namespace LOLStatisticsManager.Model.API
         {
         }
 
-        public LeagueEntryDTOCollection GetEntryBySummoner(string summonerId)
+        public List<LeagueEntryDTO> GetEntryBySummoner(string summonerId)
         {
             var httpResult = Get("/lol/league/v4/entries/by-summoner/" + summonerId);
 
@@ -17,7 +18,7 @@ namespace LOLStatisticsManager.Model.API
 
             if (httpResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                //return JsonConvert.DeserializeObject<LeagueEntryDTOCollection>(jsonDe); TO BE FIXED
+                return JsonConvert.DeserializeObject<List<LeagueEntryDTO>>(resultConent);
             }
 
             return null;

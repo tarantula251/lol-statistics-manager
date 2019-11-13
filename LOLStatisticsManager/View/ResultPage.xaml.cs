@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Collections.Generic;
 
 using LOLStatisticsManager.Controller;
 using LOLStatisticsManager.Model;
@@ -28,11 +29,11 @@ namespace LOLStatisticsManager
         {
             RiotAPIController controller = new RiotAPIController(Region);
             SummonerDTO summoner = controller.GetSummonerByName(SearchTerm);
-            LeagueEntryDTOCollection summonerLeaguesList = controller.GetEntryBySummoner(summoner.Id);
+            List<LeagueEntryDTO> summonerLeaguesList = controller.GetEntryBySummoner(summoner.Id);
             
             if (summonerLeaguesList != null)
             {
-                LeagueEntryDTO leagueEntry = summonerLeaguesList.LeagueEntriesList[0];                
+                LeagueEntryDTO leagueEntry = summonerLeaguesList[0];
             }
 
             if (summoner != null)
