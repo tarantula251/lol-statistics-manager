@@ -23,9 +23,7 @@
                 </TextBox.Background>
             </TextBox>
         </Grid>
-        <Button x:Name="searchBtn" Width="150" Height="60" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,367,349.6,59.4" VerticalContentAlignment="Center" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="searchBtn_Click">
-            <TextBlock FontWeight="Bold" FontSize="24" Foreground="White">SEARCH</TextBlock>
-        </Button>
+        <Button x:Name="searchBtn" Content="SEARCH" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="60" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,367,349.6,59.4" VerticalContentAlignment="Center" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="searchBtn_Click"></Button>
         <StackPanel Margin="526,236,67.6,59.4">
             <ListBox x:Name="listBox" ItemsSource="{Binding Localizations}" SelectedItem="{Binding SelectedCountry, Mode=TwoWay}" Background="#FF9BEBF7" Foreground="#FF1F1B74" ScrollViewer.CanContentScroll="False" Height="125" Margin="0,0,2,0" RenderTransformOrigin="0.5,0.5" FontSize="24" SelectionChanged="listBox_SelectionChanged" SelectedIndex="0"/>
         </StackPanel>

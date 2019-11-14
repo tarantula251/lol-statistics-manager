@@ -13,23 +13,55 @@
             <Grid Height="412" Width="746">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="35*"/>
-                    <ColumnDefinition Width="79*"/>
-                    <ColumnDefinition Width="35*"/>
+                    <ColumnDefinition Width="52*"/>
+                    <ColumnDefinition Width="62*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="155*"/>
-                    <RowDefinition Height="257*"/>
+                    <RowDefinition Height="197*"/>
+                    <RowDefinition Height="60*"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="imageHolder" Grid.Column="0" Grid.Row="0" Margin="10,10,10.2,10.2">
                     <Image.Source>
                         <BitmapImage x:Name="avatarIcon" UriSource="http://member.org/6bc64e7b-2df5-40d5-b6c4-eaf732318222.jpg" DecodePixelHeight="50" DecodePixelWidth="1" />
                     </Image.Source>
                 </Image>
-                <TextBlock x:Name="profileName" HorizontalAlignment="Left" Text="Kaśka" Height="58" Margin="9.8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="375" Foreground="#FFEAC3A2" Grid.Column="1" FontWeight="Bold" FontSize="36"/>
+                <TextBlock x:Name="profileName" HorizontalAlignment="Left" Text="Title" Height="58" Margin="9.8,10,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Width="266" Foreground="#FFEAC3A2" Grid.Column="1" FontWeight="Bold" FontSize="36" Grid.ColumnSpan="2"/>
                 <Label x:Name="levelLbl" Content="Level:" Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="9.8,68,0,0" VerticalAlignment="Top" Width="87" Foreground="White" FontSize="16"/>
-                <TextBlock x:Name="profileLevel" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.8,73,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="283" Foreground="White" FontSize="16"/>
+                <TextBlock x:Name="profileLevel" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.8,73,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="173" Foreground="White" FontSize="16" Grid.ColumnSpan="2"/>
                 <Label x:Name="lastUpdateLbl" Content="Updated:" Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="9.8,104,0,0" VerticalAlignment="Top" Width="87" Foreground="White" FontSize="16"/>
-                <TextBlock x:Name="lastUpdated" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.8,109,0,0" TextWrapping="Wrap" Text="TextBlockUpdate" VerticalAlignment="Top" Width="283" Foreground="White" FontSize="16"/>
+                <TextBlock x:Name="lastUpdated" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.8,109,0,0" TextWrapping="Wrap" Text="TextBlockUpdate" VerticalAlignment="Top" Width="173" Foreground="White" FontSize="16" Grid.ColumnSpan="2"/>
+                <Button x:Name="returnBtn" Content="RETURN" Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="60" Margin="124.8,2,0,-2" Grid.Row="2" VerticalAlignment="Center" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="returnBtn_Click" Grid.ColumnSpan="2"/>
+
+                <TextBlock x:Name="soloRankData" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="102.8,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="94" Foreground="White" FontWeight="Bold"/>
+                <Label x:Name="soloRankLabel" Content="soloRankLabel" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="201.8,5,0,0" VerticalAlignment="Top" Width="94" Foreground="#FFAFDAE5"/>
+                <Label x:Name="soloPoints" Content="points" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="83.8,38,0,0" VerticalAlignment="Top" Width="50" Foreground="#FFFCAA14"/>
+                <Label Content="|" Grid.Column="2" HorizontalAlignment="Left" Height="38" Margin="133.8,30,0,0" VerticalAlignment="Top" Width="14" Foreground="#FF918888" FontSize="20"/>
+                <Label x:Name="soloWins" Content="wins" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="147.8,38,0,0" VerticalAlignment="Top" Width="45" Foreground="#FF0DF628" Background="Transparent"/>
+                <Label Content="|" Grid.Column="2" HorizontalAlignment="Left" Height="38" Margin="192.8,30,0,0" VerticalAlignment="Top" Width="14" Foreground="#FF918888" FontSize="20"/>
+                <Label x:Name="soloLosses" Content="loses" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="206.8,38,0,0" VerticalAlignment="Top" Width="40" Foreground="#FFF43D0A" Background="Transparent"/>
+                <Label Content="|" Grid.Column="2" HorizontalAlignment="Left" Height="38" Margin="246.8,30,0,0" VerticalAlignment="Top" Width="14" Foreground="#FF918888" FontSize="20"/>
+                <Label x:Name="soloEfficiency" Content="%" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="262.8,38,0,0" VerticalAlignment="Top" Width="43" Foreground="White" Background="Transparent" FontWeight="Bold"/>
+                <Image x:Name="soloTierImage" Grid.Column="2" HorizontalAlignment="Left" Height="60" Margin="6.8,10,0,0" VerticalAlignment="Top" Width="60">
+                    <Image.Source>
+                        <BitmapImage x:Name="soloTierIcon" UriSource="" DecodePixelHeight="50" DecodePixelWidth="1" />
+                    </Image.Source>
+                </Image>
+
+                <TextBlock x:Name="flexRankData" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="102.8,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Foreground="White" FontWeight="Bold"><Run Text="TextBlock"/></TextBlock>
+                <Label x:Name="flexRankLabel" Content="flexRankLabel" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="94" Foreground="#FFAFDAE5" Grid.Column="2" Margin="201.8,82,0,0"/>
+                <Label x:Name="flexPoints" Content="points" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="83.8,112,0,0" VerticalAlignment="Top" Width="50" Foreground="#FFFCAA14"/>
+                <Label Content="|" Grid.Column="2" HorizontalAlignment="Left" Height="38" Margin="133.8,103,0,0" VerticalAlignment="Top" Width="14" Foreground="#FF918888" FontSize="20"/>
+                <Label x:Name="flexWins" Content="wins" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="147.8,112,0,0" VerticalAlignment="Top" Width="45" Foreground="#FF0DF628" Background="Transparent"/>
+                <Label Content="|" Grid.Column="2" HorizontalAlignment="Left" Height="38" Margin="192.8,103,0,0" VerticalAlignment="Top" Width="14" Foreground="#FF918888" FontSize="20"/>
+                <Label x:Name="flexLosses" Content="loses" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="206.8,112,0,0" VerticalAlignment="Top" Width="40" Foreground="#FFF43D0A" Background="Transparent"/>
+                <Label Content="|" Grid.Column="2" HorizontalAlignment="Left" Height="38" Margin="246.8,103,0,0" VerticalAlignment="Top" Width="14" Foreground="#FF918888" FontSize="20"/>
+                <Label x:Name="flexEfficiency" Content="%" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="262.8,112,0,0" VerticalAlignment="Top" Width="43" Foreground="White" Background="Transparent" FontWeight="Bold"/>
+                <Image x:Name="flexTierImage" Grid.Column="2" HorizontalAlignment="Left" Height="60" Margin="6.8,82,0,0" VerticalAlignment="Top" Width="60">
+                    <Image.Source>
+                        <BitmapImage x:Name="flexTierIcon" UriSource="" DecodePixelHeight="50" DecodePixelWidth="1" />
+                    </Image.Source>
+                </Image>
 
             </Grid>
         </ScrollViewer>
