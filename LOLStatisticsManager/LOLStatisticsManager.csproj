@@ -68,6 +68,8 @@
     <Compile Include="Model\API\Summoner_V4.cs" />
     <Compile Include="Model\LeagueEntryDTO.cs" />
     <Compile Include="Model\MiniSeriesDTO.cs" />
+    <Compile Include="Model\RealmData.cs" />
+    <Compile Include="Model\ResourcesManager.cs" />
     <Compile Include="Model\SummonerDTO.cs" />
     <Compile Include="View\ResultPage.xaml.cs">
       <DependentUpon>ResultPage.xaml</DependentUpon>

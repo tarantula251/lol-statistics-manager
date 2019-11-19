@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-
 namespace LOLStatisticsManager.Model.API
 {
     public class RiotAPI
@@ -19,6 +18,6 @@ namespace LOLStatisticsManager.Model.API
             var result = httpClient.GetAsync("https://" + region + ".api.riotgames.com" + request + "?api_key=" + key);
             result.Wait();
             return result.Result;
-        }  
+        }        
     }
 }

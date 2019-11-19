@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 
@@ -15,7 +16,9 @@ namespace LOLStatisticsManager
 
         public SearchPage()
         {
-            Localizations = new ObservableCollection<string>() { "EUN1", "NA1", "EUW1", "BR1", "JP1", "KR", "LA1", "LA2", "OC1", "RU", "TR1" };
+            Localizations = new ObservableCollection<string>(){
+                "EUN1", "NA1", "EUW1", "BR1", "JP1", "KR", "LA1", "LA2", "OC1", "RU", "TR1"
+            };
             InitializeComponent();
             DataContext = this;
         }

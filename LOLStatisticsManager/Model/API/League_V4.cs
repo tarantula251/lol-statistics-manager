@@ -13,11 +13,11 @@ namespace LOLStatisticsManager.Model.API
         {
             var httpResult = Get("/lol/league/v4/entries/by-summoner/" + summonerId);
 
-            string resultConent = httpResult.Content.ReadAsStringAsync().Result;
+            string resultContent = httpResult.Content.ReadAsStringAsync().Result;
 
             if (httpResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                return JsonConvert.DeserializeObject<List<LeagueEntryDTO>>(resultConent);
+                return JsonConvert.DeserializeObject<List<LeagueEntryDTO>>(resultContent);
             }
 
             return null;
