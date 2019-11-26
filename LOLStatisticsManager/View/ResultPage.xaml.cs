@@ -5,6 +5,7 @@ using System.Windows;
 
 using LOLStatisticsManager.Controller;
 using LOLStatisticsManager.Model;
+using LOLStatisticsManager.View;
 
 namespace LOLStatisticsManager
 {
@@ -18,9 +19,9 @@ namespace LOLStatisticsManager
 
         private ResourcesManager resourcesManager;
 
-        private string QueueTypeSolo = "SOLO";
+        private readonly string RankSolo = "Ranked Solo";
 
-        private string QueueTypeFlex = "FLEX";
+        private readonly string RankFlex = "Ranked Flex";
 
 
         public ResultPage(string region, string searchTerm)
@@ -34,92 +35,93 @@ namespace LOLStatisticsManager
 
         private void ResultPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            RiotAPIController controller = new RiotAPIController(Region);
-            SummonerDTO summoner = controller.GetSummonerByName(SearchTerm);
-            List<LeagueEntryDTO> leagueEntryList = controller.GetEntryBySummoner(summoner.Id);
-            //TO DO: create a service class which will retrieve data and make calculations for statistics, as this view class should't take care of it.
+            RiotAPIController controller = new RiotAPIController(Region, SearchTerm);
+            StatisticsController statsController = new StatisticsController(controller, Region, SearchTerm);
 
-            if (summoner != null)
+            //summoner section
+            Dictionary<string, string> summonerData = statsController.GetSummonerData();
+            if (summonerData != null && summonerData.Count > 0)
             {
-                DisplayProfileImage(summoner);
-                DisplayProfileData(summoner);
+                DisplayProfileImage(summonerData["profileIconId"]);
+                DisplayProfileData(summonerData);
             }
 
+            //league section
+            List<Dictionary<string, string>> leagueEntryList = statsController.GetLeagueEntryData();
             if (leagueEntryList != null && leagueEntryList.Count > 0)
             {
-                foreach (LeagueEntryDTO entry in leagueEntryList)
+                foreach (Dictionary<string, string> entryDictionary in leagueEntryList)
                 {
-                    DisplayLeagueEntryImage(entry);
-                    DisplayLeagueEntryData(entry);
+                    DisplayLeagueEntryImage(entryDictionary["tier"].ToLower(), entryDictionary["rankType"]);
+                    DisplayLeagueEntryData(entryDictionary);
                 }
             }
             else
             {
                 DisplayNoRankDataLabels();
             }
+
+            //match section
+            Dictionary<string, object> matchReferenceData = statsController.GetMatchReferenceData();
+            Dictionary<string, object> matchData = statsController.GetMatchData();
+
+            //league mastery section
+            List<Dictionary<string, object>> championMasteryData = statsController.GetChampionMasteryData();
         }
 
-        private void DisplayProfileImage(SummonerDTO summoner)
+        private void DisplayProfileImage(string profileIconId)
         {
-            profileIcon.Source = resourcesManager.GetProfileIcon(summoner);           
+            profileIcon.Source = resourcesManager.GetProfileIcon(profileIconId); 
         }
-        private void DisplayLeagueEntryImage(LeagueEntryDTO leagueEntry)
+        private void DisplayProfileData(Dictionary<string, string> summonerData)
         {
-            if (leagueEntry.QueueType.Contains(QueueTypeSolo))
+            profileName.Text = summonerData["name"];
+            profileLevel.Text = summonerData["level"];
+            lastUpdated.Text = summonerData["lastUpdated"];
+        }
+
+        private void DisplayLeagueEntryImage(string tier, string rankType)
+        {
+            System.Windows.Media.ImageSource imageSource = resourcesManager.GetTierIcon(tier);
+
+            if (rankType.Contains(RankSolo))
             {
-                soloTierImage.Source = resourcesManager.GetTierIcon(leagueEntry);
+                soloTierImage.Source = imageSource;
             }
-            else if (leagueEntry.QueueType.Contains(QueueTypeFlex))
+            else if (rankType.Contains(RankFlex))
             {
-                flexTierImage.Source = resourcesManager.GetTierIcon(leagueEntry);
+                flexTierImage.Source = imageSource;
             }            
         }
-        private void DisplayProfileData(SummonerDTO summoner)
+
+        private void DisplayLeagueEntryData(Dictionary<string, string> leagueEntry)
         {
-            profileName.Text = summoner.Name;
-            profileLevel.Text = summoner.SummonerLevel.ToString();
-            long unixDate = summoner.RevisionDate;
-            DateTime startdate = DateTimeOffset.FromUnixTimeMilliseconds(unixDate).UtcDateTime;
-            lastUpdated.Text = startdate.ToString();
-        }
-        private void DisplayLeagueEntryData(LeagueEntryDTO entry)
-        {
-            if (entry.QueueType.Contains(QueueTypeSolo))
+            if (leagueEntry["rankType"].Contains(RankSolo))
             {
-                soloRankData.Text = entry.Tier + "  " + entry.Rank;
-                soloRankLabel.Content = "Ranked Solo";
-                soloPoints.Content = entry.LeaguePoints.ToString() + " LP";
-                soloWins.Content = entry.Wins.ToString() + " W";
-                soloLosses.Content = entry.Losses.ToString() + " L";
-                soloEfficiency.Content = (100 * entry.Wins / (entry.Losses + entry.Wins)).ToString() + " %";
+                soloRankData.Text = leagueEntry["rankData"];
+                soloRankLabel.Content = leagueEntry["rankType"];
+                soloPoints.Content = leagueEntry["points"];
+                soloWins.Content = leagueEntry["wins"];
+                soloLosses.Content = leagueEntry["losses"];
+                soloEfficiency.Content = leagueEntry["efficiency"];
 
             }
-            else
+            else if (leagueEntry["rankType"].Contains(RankFlex))
             {
-                mainGrid.Children.Remove(this.soloGrid);
-                soloNotRanked.Visibility = Visibility.Visible;
-            }
-
-            if (entry.QueueType.Contains(QueueTypeFlex))
-            {
-                flexRankData.Text = entry.Tier + "  " + entry.Rank;
-                flexRankLabel.Content = "Ranked Flex";
-                flexPoints.Content = entry.LeaguePoints.ToString() + " LP";
-                flexWins.Content = entry.Wins.ToString() + " W";
-                flexLosses.Content = entry.Losses.ToString() + " L";
-                flexEfficiency.Content = (100 * entry.Wins / (entry.Losses + entry.Wins)).ToString() + " %";
+                flexRankData.Text = leagueEntry["rankData"];
+                flexRankLabel.Content = leagueEntry["rankType"];
+                flexPoints.Content = leagueEntry["points"];
+                flexWins.Content = leagueEntry["wins"];
+                flexLosses.Content = leagueEntry["losses"];
+                flexEfficiency.Content = leagueEntry["efficiency"];
             }
             else
             {
                 mainGrid.Children.Remove(this.flexGrid);
+                mainGrid.Children.Remove(this.soloGrid);
                 flexNotRanked.Visibility = Visibility.Visible;
-
-            }
-
-            if (entry.MiniSeries != null)
-            {
-                MiniSeriesDTO miniSeries = entry.MiniSeries;
-            }        
+                soloNotRanked.Visibility = Visibility.Visible;
+            }     
         }
 
         private void DisplayNoRankDataLabels()
@@ -134,5 +136,6 @@ namespace LOLStatisticsManager
         {
             this.NavigationService.Navigate(new SearchPage());
         }
+
     }
 }

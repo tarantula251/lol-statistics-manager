@@ -9,31 +9,32 @@
       Title="ResultPage" Loaded="ResultPage_Loaded">
 
     <Grid>
-        <ScrollViewer HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="790">
-            <Grid x:Name="mainGrid" Height="412" Width="746">
+        <ScrollViewer HorizontalAlignment="Right" Height="450" VerticalAlignment="Top" Width="800" Margin="0,0,0,0">
+            <Grid x:Name="mainGrid" Margin="27,19,10,9.6">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35*"/>
-                    <ColumnDefinition Width="52*"/>
-                    <ColumnDefinition Width="62*"/>
+                    <ColumnDefinition Width="87*"/>
+                    <ColumnDefinition Width="130*"/>
+                    <ColumnDefinition Width="130*"/>
+                    <ColumnDefinition Width="26*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="175*"/>
-                    <RowDefinition Height="177*"/>
-                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="160*"/>
+                    <RowDefinition Height="217*"/>
+                    <RowDefinition Height="44*"/>
                 </Grid.RowDefinitions>
-                <Image x:Name="profileIcon" Grid.Column="0" Grid.Row="0" Margin="10,10,10.2,6.2">
+                <Image x:Name="profileIcon" Grid.Column="0" Grid.Row="0" Margin="10,10,10.4,11">
                     <Image.Source>
                         <BitmapImage x:Name="avatarIcon" UriSource="http://member.org/6bc64e7b-2df5-40d5-b6c4-eaf732318222.jpg" DecodePixelHeight="50" DecodePixelWidth="1" />
                     </Image.Source>
                 </Image>
-                <TextBlock x:Name="profileName" HorizontalAlignment="Left" Text="Title" Height="58" Margin="9.8,10,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Width="250" Foreground="#FFEAC3A2" Grid.Column="1" FontWeight="Bold" FontSize="36"/>
-                <Label x:Name="levelLbl" Content="Level:" Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="9.8,68,0,0" VerticalAlignment="Top" Width="87" Foreground="White" FontSize="16"/>
-                <TextBlock x:Name="profileLevel" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.8,73,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="158" Foreground="White" FontSize="16"/>
-                <Label x:Name="lastUpdateLbl" Content="Updated:" Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="9.8,104,0,0" VerticalAlignment="Top" Width="87" Foreground="White" FontSize="16"/>
-                <TextBlock x:Name="lastUpdated" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.8,109,0,0" TextWrapping="Wrap" Text="TextBlockUpdate" VerticalAlignment="Top" Width="158" Foreground="White" FontSize="16"/>
-                <Button x:Name="returnBtn" Content="RETURN" Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="60" Margin="124.8,2,0,-2" Grid.Row="2" VerticalAlignment="Center" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="returnBtn_Click" Grid.ColumnSpan="2"/>
+                <TextBlock x:Name="profileName" HorizontalAlignment="Left" Text="Title" Height="58" Margin="9.6,10,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Width="250" Foreground="#FFEAC3A2" Grid.Column="1" FontWeight="Bold" FontSize="36"/>
+                <Label x:Name="levelLbl" Content="Level:" Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="9.6,68,0,0" VerticalAlignment="Top" Width="87" Foreground="White" FontSize="16"/>
+                <TextBlock x:Name="profileLevel" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.6,73,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="158" Foreground="White" FontSize="16"/>
+                <Label x:Name="lastUpdateLbl" Content="Updated:" Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="9.6,104,0,0" VerticalAlignment="Top" Width="87" Foreground="White" FontSize="16"/>
+                <TextBlock x:Name="lastUpdated" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="101.6,109,0,0" TextWrapping="Wrap" Text="TextBlockUpdate" VerticalAlignment="Top" Width="158" Foreground="White" FontSize="16"/>
+                <Button x:Name="returnBtn" Content="RETURN" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="43" Margin="10,0,0,0.8" Grid.Row="2" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="returnBtn_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
 
-                <Grid x:Name="soloGrid" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="311" Height="80">
+                <Grid x:Name="soloGrid" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="259.6,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="311" Height="80">
                     <Grid.RowDefinitions>
                         <RowDefinition x:Name="soloRankRow1" Height="40"/>
                         <RowDefinition x:Name="soloRankRow2" Height="40"/>
@@ -59,7 +60,7 @@
                     </Image>
                 </Grid>
 
-                <Grid x:Name="flexGrid" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="0" Width="311" VerticalAlignment="Bottom" Height="80">
+                <Grid x:Name="flexGrid" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="259.6,0,0,5" Width="311" VerticalAlignment="Bottom" Height="80">
                     <Grid.RowDefinitions>
                         <RowDefinition x:Name="flexRankRow1" Height="40"/>
                         <RowDefinition x:Name="flexRankRow2" Height="40"/>
@@ -85,8 +86,8 @@
                     </Image>
                 </Grid>
 
-                <Label x:Name="soloNotRanked" Content="NOT RANKED SOLO" Grid.Column="2" Margin="49.8,22,0,0" Width="221" Foreground="#FF473A71" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Opacity="0.7" Visibility="Hidden" Height="37"/>
-                <Label x:Name="flexNotRanked" Content="NOT RANKED FLEX" Grid.Column="2" Margin="49.8,100,0,0" Width="221" Foreground="#FF473A71" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Opacity="0.7" Visibility="Hidden" Height="37"/>
+                <Label x:Name="soloNotRanked" Content="NOT RANKED SOLO" Grid.Column="2" Margin="48.6,22,0,0" Width="221" Foreground="#FF473A71" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Opacity="0.7" Visibility="Hidden" Height="37" Grid.ColumnSpan="2"/>
+                <Label x:Name="flexNotRanked" Content="NOT RANKED FLEX" Grid.Column="2" Margin="48.6,100,0,0" Width="221" Foreground="#FF473A71" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Opacity="0.7" Visibility="Hidden" Height="37" Grid.ColumnSpan="2"/>
             </Grid>
         </ScrollViewer>
     </Grid>

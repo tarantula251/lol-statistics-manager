@@ -50,9 +50,9 @@ namespace LOLStatisticsManager.Model
             return routingValuesMap[region];
         }
 
-        public BitmapImage GetProfileIcon(SummonerDTO summoner)
+        public BitmapImage GetProfileIcon(string profileIconId)
         {
-            string profileIconUrl = ResourcesUrl + "/" + Version + "/img/profileicon/" + summoner.ProfileIconId.ToString() + ".png";
+            string profileIconUrl = ResourcesUrl + "/" + Version + "/img/profileicon/" + profileIconId + ".png";
             var image = new BitmapImage();
             int BytesToRead = 100;
 
@@ -81,9 +81,9 @@ namespace LOLStatisticsManager.Model
             }
             return image;
         }
-        public BitmapImage GetTierIcon(LeagueEntryDTO leagueEntry)
+        public BitmapImage GetTierIcon(string tier)
         {            
-            string tierIconUrl = TiersResourcesUrl + leagueEntry.Tier.ToLower() + ".png";
+            string tierIconUrl = TiersResourcesUrl + tier + ".png";
             var image = new BitmapImage();
             int BytesToRead = 100;
 

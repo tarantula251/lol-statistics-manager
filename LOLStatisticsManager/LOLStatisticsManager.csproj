@@ -63,14 +63,33 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\RiotAPIController.cs" />
+    <Compile Include="Model\API\Champion_Mastery_V4.cs" />
+    <Compile Include="Model\API\Match_V4.cs" />
     <Compile Include="Model\API\RiotAPI.cs" />
     <Compile Include="Model\API\League_V4.cs" />
     <Compile Include="Model\API\Summoner_V4.cs" />
-    <Compile Include="Model\LeagueEntryDTO.cs" />
-    <Compile Include="Model\MiniSeriesDTO.cs" />
-    <Compile Include="Model\RealmData.cs" />
+    <Compile Include="Model\DTO\ChampionMasteryDTO.cs" />
+    <Compile Include="Model\DTO\LeagueEntryDTO.cs" />
+    <Compile Include="Model\DTO\MasteryDTO.cs" />
+    <Compile Include="Model\DTO\MatchDTO.cs" />
+    <Compile Include="Model\DTO\MatchlistDTO.cs" />
+    <Compile Include="Model\DTO\MatchReferenceDTO.cs" />
+    <Compile Include="Model\DTO\MiniSeriesDTO.cs" />
+    <Compile Include="Model\DTO\ParticipantDTO.cs" />
+    <Compile Include="Model\DTO\ParticipantIdentityDTO.cs" />
+    <Compile Include="Model\DTO\ParticipantStatsDTO.cs" />
+    <Compile Include="Model\DTO\ParticipantTimelineDTO.cs" />
+    <Compile Include="Model\DTO\PlayerDTO.cs" />
+    <Compile Include="Model\DTO\RealmData.cs" />
     <Compile Include="Model\ResourcesManager.cs" />
-    <Compile Include="Model\SummonerDTO.cs" />
+    <Compile Include="Model\DTO\RuneDTO.cs" />
+    <Compile Include="Model\DTO\SummonerDTO.cs" />
+    <Compile Include="Model\DTO\TeamBansDTO.cs" />
+    <Compile Include="Model\DTO\TeamStatsDTO.cs" />
+    <Compile Include="Controller\StatisticsController.cs" />
+    <Compile Include="View\ChampionsPage.xaml.cs">
+      <DependentUpon>ChampionsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ResultPage.xaml.cs">
       <DependentUpon>ResultPage.xaml</DependentUpon>
     </Compile>
@@ -78,6 +97,10 @@
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServerLocationSelector.cs" />
+    <Page Include="View\ChampionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
