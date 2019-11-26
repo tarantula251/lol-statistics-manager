@@ -5,7 +5,6 @@ using System.Windows;
 
 using LOLStatisticsManager.Controller;
 using LOLStatisticsManager.Model;
-using LOLStatisticsManager.View;
 
 namespace LOLStatisticsManager
 {

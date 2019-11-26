@@ -87,9 +87,6 @@
     <Compile Include="Model\DTO\TeamBansDTO.cs" />
     <Compile Include="Model\DTO\TeamStatsDTO.cs" />
     <Compile Include="Controller\StatisticsController.cs" />
-    <Compile Include="View\ChampionsPage.xaml.cs">
-      <DependentUpon>ChampionsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ResultPage.xaml.cs">
       <DependentUpon>ResultPage.xaml</DependentUpon>
     </Compile>
@@ -97,10 +94,6 @@
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServerLocationSelector.cs" />
-    <Page Include="View\ChampionsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
