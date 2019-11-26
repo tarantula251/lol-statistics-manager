@@ -138,15 +138,15 @@ namespace LOLStatisticsManager.Model
             {
                 { "seasonId", match.SeasonId.ToString() },
                 { "queueId", match.QueueId.ToString() },
+                { "gameId", match.GameId },
                 { "gameVersion", match.GameVersion },
-                { "platformId", match.PlatformId },
                 { "platformId", match.PlatformId },
                 { "gameMode", match.GameMode },
                 { "mapId", match.MapId.ToString() },
                 { "gameType", match.GameType },
                 { "gameDuration", match.GameDuration.ToString() },
                 { "gameCreation", match.GameCreation.ToString() },
-                { "participants", GetParticipantIdentities(match) },
+                { "participantIdentities", GetParticipantIdentities(match) },
                 { "teams", GetTeamStats(match) },
                 { "participants", GetParticipants(match) },
             };
@@ -237,11 +237,6 @@ namespace LOLStatisticsManager.Model
                     };
                     teamStatsList.Add(stat);
                 }
-
-                Dictionary<string, object> testTeamstats = teamStatsList[0];
-                Dictionary<string, object> test = (Dictionary<string, object>)testTeamstats["bans"];
-                Console.WriteLine("1 " + test["pickTurn"]);
-                Console.WriteLine("1 " + test["championId"]);
             }
 
             return teamStatsList;
