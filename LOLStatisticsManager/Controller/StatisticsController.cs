@@ -2,6 +2,7 @@
 using LOLStatisticsManager.Controller;
 using System.Collections.Generic;
 using System;
+using LOLStatisticsManager.Model.Stats;
 
 namespace LOLStatisticsManager.Model
 {
@@ -12,7 +13,6 @@ namespace LOLStatisticsManager.Model
         private string SummonerName { get; set; }
         private string AccountId { get; set; }
         private string SummonerId { get; set; }
-        private string MatchId { get; set; }
 
         private string QueueTypeSolo = "SOLO";
 
@@ -23,6 +23,81 @@ namespace LOLStatisticsManager.Model
             this.RiotApiController = apiController;
             this.Region = region;
             this.SummonerName = summonerName;
+        }
+
+        public List<ChampionOnLaneStat> GetChampionOnLaneStats()
+        {
+            List<ChampionOnLaneStat> result = new List<ChampionOnLaneStat>();
+            Dictionary<string, Tuple<int, ChampionOnLaneStat>> championOnLaneMap = new Dictionary<string, Tuple<int, ChampionOnLaneStat>>();
+            MatchlistDTO matchList = RiotApiController.GetMatchlistByAccount(AccountId);
+            int matchesInCurrentSeason = 0;
+            foreach(var matchReference in matchList.Matches)
+            {
+                if (matchReference.Season != 13) continue;
+                ++matchesInCurrentSeason;
+                ChampionOnLaneStat championOnLaneStat;
+                string key = matchReference.Lane + matchReference.Champion;
+                if (championOnLaneMap.ContainsKey(key))
+                {
+                    var championOnLaneTuple = championOnLaneMap[key];
+                    championOnLaneStat = championOnLaneTuple.Item2;
+                    int championOnLaneCount = championOnLaneTuple.Item1 + 1;
+                    championOnLaneMap[key] = new Tuple<int, ChampionOnLaneStat>(championOnLaneCount, championOnLaneStat);
+                }
+                else
+                {
+                    championOnLaneStat = new ChampionOnLaneStat();
+                    championOnLaneStat.Champion = matchReference.Champion;
+                    championOnLaneStat.Lane = matchReference.Lane;
+                    championOnLaneMap.Add(key, new Tuple<int, ChampionOnLaneStat>(1, championOnLaneStat));
+                }
+                MatchDTO match = RiotApiController.GetMatchEntryByMatch(matchReference.GameId);
+                if (match == null) continue;
+                var participantIdentity = match.ParticipantIdentities.Find((ParticipantIdentityDTO x) =>
+                {
+                    return x.Player.SummonerId == SummonerId;
+                });
+                if (participantIdentity == null) continue;
+
+                var participant = match.Participants.Find((ParticipantDTO x) =>
+                {
+                    return x.ParticipantId == participantIdentity.ParticipantId;
+                });
+                if (participant == null) continue;
+
+                var participantStats = participant.Stats;
+
+                int gameDurationInMinutes = (int)(match.GameDuration / 60);
+
+                championOnLaneStat.KillsAvg += participantStats.Kills;
+                championOnLaneStat.DeathsAvg += participantStats.Deaths;
+                championOnLaneStat.AssistsAvg += participantStats.Assists;
+                if(participantStats.Win) championOnLaneStat.WinPercent += 1.0f;
+                championOnLaneStat.TotalDamageDealtAvgPerMin += participantStats.TotalDamageDealtToChampions / gameDurationInMinutes;
+                championOnLaneStat.GoldEarnedAvgPerMin += participantStats.GoldEarned / gameDurationInMinutes;
+                championOnLaneStat.MinionsKilledAvgPerMin += participantStats.TotalMinionsKilled / gameDurationInMinutes;
+                if (participantStats.FirstBloodAssist || participantStats.FirstBloodKill) championOnLaneStat.FirstBloodParticipationPercent += 1.0f;
+
+            }
+
+            foreach(var statPair in championOnLaneMap)
+            {
+                var stat = statPair.Value.Item2;
+                int count = statPair.Value.Item1;
+                stat.PickPercent = ((float)count / matchesInCurrentSeason) * 100.0f;
+                stat.KillsAvg /= count;
+                stat.DeathsAvg /= count;
+                stat.AssistsAvg /= count;
+                stat.WinPercent = (stat.WinPercent / count) * 100.0f;
+                stat.TotalDamageDealtAvgPerMin /= count;
+                stat.GoldEarnedAvgPerMin /= count;
+                stat.MinionsKilledAvgPerMin /= count;
+                stat.FirstBloodParticipationPercent = (stat.FirstBloodParticipationPercent / count) * 100.0f;
+
+                result.Add(stat);
+            }
+
+            return result;
         }
 
         public Dictionary<string, string> GetSummonerData()
@@ -99,20 +174,6 @@ namespace LOLStatisticsManager.Model
                     };
                     matchReferenceList.Add(reference);
                 }
-
-                Dictionary<string, object> test = matchReferenceList[0];
-                Console.WriteLine("1 " + test["lane"]);
-                Console.WriteLine("1 " + test["gameId"]);
-                Console.WriteLine("1 " + test["champion"]);
-                Console.WriteLine("1 " + test["platformId"]);
-                Console.WriteLine("1 " + test["season"]);
-                Console.WriteLine("1 " + test["queue"]);
-                Console.WriteLine("1 " + test["role"]);
-                Console.WriteLine("1 " + test["timestamp"]);
-                Console.WriteLine("----------------");
-
-                //to be fixed
-                MatchId = test["gameId"].ToString();
             }
 
             Dictionary<string, object> resultMap = new Dictionary<string, object>()
@@ -127,30 +188,6 @@ namespace LOLStatisticsManager.Model
             Console.WriteLine("1 " + resultMap["startIndex"]);
             Console.WriteLine("1 " + resultMap["endIndex"]);
 
-            return resultMap;
-        }
-
-        public Dictionary<string, object> GetMatchData()
-        {
-            MatchDTO match = RiotApiController.GetMatchEntryByMatch(MatchId);
-            
-            Dictionary<string, object> resultMap = new Dictionary<string, object>()
-            {
-                { "seasonId", match.SeasonId.ToString() },
-                { "queueId", match.QueueId.ToString() },
-                { "gameId", match.GameId },
-                { "gameVersion", match.GameVersion },
-                { "platformId", match.PlatformId },
-                { "gameMode", match.GameMode },
-                { "mapId", match.MapId.ToString() },
-                { "gameType", match.GameType },
-                { "gameDuration", match.GameDuration.ToString() },
-                { "gameCreation", match.GameCreation.ToString() },
-                { "participantIdentities", GetParticipantIdentities(match) },
-                { "teams", GetTeamStats(match) },
-                { "participants", GetParticipants(match) },
-            };
-            
             return resultMap;
         }
 

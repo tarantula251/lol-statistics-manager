@@ -60,12 +60,21 @@ namespace LOLStatisticsManager
                 DisplayNoRankDataLabels();
             }
 
-            //match section
-            Dictionary<string, object> matchReferenceData = statsController.GetMatchReferenceData();
-            Dictionary<string, object> matchData = statsController.GetMatchData();
+            var chonlstats = statsController.GetChampionOnLaneStats();
 
-            //league mastery section
-            List<Dictionary<string, object>> championMasteryData = statsController.GetChampionMasteryData();
+            //Diagnostic
+            foreach(var stat in chonlstats)
+            {
+                Console.WriteLine("Name: " + stat.Champion + " Lane: " + stat.Lane);
+                Console.WriteLine("% chance of pick: " + stat.PickPercent);
+                Console.WriteLine("K/D/A: " + stat.KillsAvg + "/" + stat.DeathsAvg + "/" + stat.AssistsAvg);
+                Console.WriteLine("% of wins: " + stat.WinPercent);
+                Console.WriteLine("DPM: " + stat.TotalDamageDealtAvgPerMin);
+                Console.WriteLine("GPM: " + stat.GoldEarnedAvgPerMin);
+                Console.WriteLine("CSPM: " + stat.MinionsKilledAvgPerMin);
+                Console.WriteLine("% chance of FB participation: " + stat.FirstBloodParticipationPercent);
+                Console.WriteLine("------------------------------------------------------------------------");
+            }
         }
 
         private void DisplayProfileImage(string profileIconId)

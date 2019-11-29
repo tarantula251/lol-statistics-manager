@@ -87,6 +87,7 @@
     <Compile Include="Model\DTO\TeamBansDTO.cs" />
     <Compile Include="Model\DTO\TeamStatsDTO.cs" />
     <Compile Include="Controller\StatisticsController.cs" />
+    <Compile Include="Model\Stats\ChampionOnLaneStat.cs" />
     <Compile Include="View\ResultPage.xaml.cs">
       <DependentUpon>ResultPage.xaml</DependentUpon>
     </Compile>

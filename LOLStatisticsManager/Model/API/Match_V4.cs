@@ -22,7 +22,7 @@ namespace LOLStatisticsManager.Model.API
             return null;
         }
 
-        public MatchDTO GetEntryByMatch(string matchId)
+        public MatchDTO GetEntryByMatch(long matchId)
         {
             var httpResult = Get("/lol/match/v4/matches/" + matchId);
 

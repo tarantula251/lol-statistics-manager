@@ -37,7 +37,7 @@ namespace LOLStatisticsManager.Controller
             Match_V4 match_V4 = new Match_V4(Region);
             return match_V4.GetEntryByAccount(accountId);
         }
-        public MatchDTO GetMatchEntryByMatch(string matchId)
+        public MatchDTO GetMatchEntryByMatch(long matchId)
         {
             Match_V4 match_V4 = new Match_V4(Region);
             return match_V4.GetEntryByMatch(matchId);

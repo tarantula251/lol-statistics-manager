@@ -61,7 +61,7 @@ namespace LOLStatisticsManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RGAPI-e9470637-46e2-47ff-8632-4a3e7afd9a8e.
+        ///   Looks up a localized string similar to RGAPI-767f74d5-3923-4928-9486-94951a43c26c.
         /// </summary>
         internal static string RiotAPIKey {
             get {
