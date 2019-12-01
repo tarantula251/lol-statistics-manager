@@ -68,6 +68,8 @@
     <Compile Include="Model\API\RiotAPI.cs" />
     <Compile Include="Model\API\League_V4.cs" />
     <Compile Include="Model\API\Summoner_V4.cs" />
+    <Compile Include="Model\DTO\Champion.cs" />
+    <Compile Include="Model\DTO\ChampionData.cs" />
     <Compile Include="Model\DTO\ChampionMasteryDTO.cs" />
     <Compile Include="Model\DTO\LeagueEntryDTO.cs" />
     <Compile Include="Model\DTO\MasteryDTO.cs" />
@@ -142,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\test.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,6 +5,7 @@ using System.Windows;
 
 using LOLStatisticsManager.Controller;
 using LOLStatisticsManager.Model;
+using System.Windows.Media;
 
 namespace LOLStatisticsManager
 {
@@ -22,12 +23,11 @@ namespace LOLStatisticsManager
 
         private readonly string RankFlex = "Ranked Flex";
 
-
         public ResultPage(string region, string searchTerm)
         {
             Region = region;
             SearchTerm = searchTerm;
-            
+
             resourcesManager = new ResourcesManager(Region);
             InitializeComponent();
         }
@@ -35,7 +35,7 @@ namespace LOLStatisticsManager
         private void ResultPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             RiotAPIController controller = new RiotAPIController(Region, SearchTerm);
-            StatisticsController statsController = new StatisticsController(controller, Region, SearchTerm);
+            StatisticsController statsController = new StatisticsController(controller, SearchTerm);
 
             //summoner section
             Dictionary<string, string> summonerData = statsController.GetSummonerData();
@@ -61,25 +61,41 @@ namespace LOLStatisticsManager
             }
 
             var chonlstats = statsController.GetChampionOnLaneStats();
-
-            //Diagnostic
-            foreach(var stat in chonlstats)
+            
+            //champion info
+            List<ChampionInfo> championsInfo = new List<ChampionInfo>();
+            foreach (var stat in chonlstats)
             {
-                Console.WriteLine("Name: " + stat.Champion + " Lane: " + stat.Lane);
-                Console.WriteLine("% chance of pick: " + stat.PickPercent);
-                Console.WriteLine("K/D/A: " + stat.KillsAvg + "/" + stat.DeathsAvg + "/" + stat.AssistsAvg);
-                Console.WriteLine("% of wins: " + stat.WinPercent);
-                Console.WriteLine("DPM: " + stat.TotalDamageDealtAvgPerMin);
-                Console.WriteLine("GPM: " + stat.GoldEarnedAvgPerMin);
-                Console.WriteLine("CSPM: " + stat.MinionsKilledAvgPerMin);
-                Console.WriteLine("% chance of FB participation: " + stat.FirstBloodParticipationPercent);
-                Console.WriteLine("------------------------------------------------------------------------");
+                ChampionInfo info = new ChampionInfo
+                { 
+                    Name = stat.Champion.ToString(),
+                    Lane = stat.Lane,
+                    PickPercent = stat.PickPercent.ToString(),
+                    WinPercent = stat.WinPercent.ToString(),
+                    KDA = stat.KillsAvg + "/" + stat.DeathsAvg + "/" + stat.AssistsAvg,
+                    TotalDamageDealtAvgPerMin = stat.TotalDamageDealtAvgPerMin.ToString(),
+                    GoldEarnedAvgPerMin = stat.GoldEarnedAvgPerMin.ToString(),
+                    MinionsKilledAvgPerMin = stat.MinionsKilledAvgPerMin.ToString(),
+                    FirstBloodParticipationPercent = stat.FirstBloodParticipationPercent.ToString()
+                //    ChampionIconSource = resourcesManager.GetIcon(stat.Champion.ToString(), "champion")
+                }; //TODO get champion name basing on stat.Champion => Champion Id
+                championsInfo.Add(info);
             }
+            championGrid.ItemsSource = championsInfo;
+
+            Console.WriteLine("w obiekcie ChampionInfo"+championsInfo[0].ChampionIconSource);
+
+            //match section
+            //Dictionary<string, object> matchReferenceData = statsController.GetMatchReferenceData();
+            //Dictionary<string, object> matchData = statsController.GetMatchData();
+
+            //league mastery section
+            //List<Dictionary<string, object>> championMasteryData = statsController.GetChampionMasteryData();
         }
 
         private void DisplayProfileImage(string profileIconId)
         {
-            profileIcon.Source = resourcesManager.GetProfileIcon(profileIconId); 
+            profileIcon.Source = resourcesManager.GetIcon(profileIconId, "profile");
         }
         private void DisplayProfileData(Dictionary<string, string> summonerData)
         {
@@ -99,7 +115,7 @@ namespace LOLStatisticsManager
             else if (rankType.Contains(RankFlex))
             {
                 flexTierImage.Source = imageSource;
-            }            
+            }
         }
 
         private void DisplayLeagueEntryData(Dictionary<string, string> leagueEntry)
@@ -129,21 +145,34 @@ namespace LOLStatisticsManager
                 mainGrid.Children.Remove(this.soloGrid);
                 flexNotRanked.Visibility = Visibility.Visible;
                 soloNotRanked.Visibility = Visibility.Visible;
-            }     
+            }
         }
 
         private void DisplayNoRankDataLabels()
         {
-            mainGrid.Children.Remove(this.soloGrid);           
-            mainGrid.Children.Remove(this.flexGrid);           
+            mainGrid.Children.Remove(this.soloGrid);
+            mainGrid.Children.Remove(this.flexGrid);
             soloNotRanked.Visibility = Visibility.Visible;
-            flexNotRanked.Visibility = Visibility.Visible;                
+            flexNotRanked.Visibility = Visibility.Visible;
         }
 
         private void returnBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new SearchPage());
         }
+    }
 
+    public class ChampionInfo
+    {
+        public string Name { get; set; }
+        public string Lane { get; set; }
+        public string PickPercent { get; set; }
+        public string KDA { get; set; }
+        public string WinPercent { get; set; }
+        public string TotalDamageDealtAvgPerMin { get; set; }
+        public string GoldEarnedAvgPerMin { get; set; }
+        public string MinionsKilledAvgPerMin { get; set; }
+        public string FirstBloodParticipationPercent { get; set; }
+        public ImageSource ChampionIconSource { get; set; }
     }
 }

@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 
+using LOLStatisticsManager.Model.DTO;
+
 namespace LOLStatisticsManager.Model
 {
     class ResourcesManager
@@ -15,7 +17,9 @@ namespace LOLStatisticsManager.Model
         const string TiersResourcesUrl = "https://cdn.mobalytics.gg/stable/season_9_tiers/";
 
         private RealmData realmData;
-        string ResourcesUrl { get; set; }
+
+        private ChampionData championData;
+        string ResourcesUrl { get; set; }        
 
         private Dictionary<string, string> routingValuesMap = new Dictionary<string, string>() {
             { "EUN1", "EUNE" },
@@ -43,6 +47,18 @@ namespace LOLStatisticsManager.Model
                 Version = realmData.V;
                 ResourcesUrl = realmData.CDN;
             }
+
+            //champion data
+            httpResult = Get("https://ddragon.leagueoflegends.com/cdn/" + Version  + "/data/en_US/champion.json");
+            resultContent = httpResult.Content.ReadAsStringAsync().Result;
+
+            if (httpResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                championData = JsonConvert.DeserializeObject<ChampionData>(resultContent);
+            }
+
+            Console.WriteLine("championData " + championData);
+
         }
 
         public string GetRoutingValue(string region)
@@ -50,13 +66,37 @@ namespace LOLStatisticsManager.Model
             return routingValuesMap[region];
         }
 
-        public BitmapImage GetProfileIcon(string profileIconId)
+        public BitmapImage GetIcon(string iconId, string iconType)
         {
-            string profileIconUrl = ResourcesUrl + "/" + Version + "/img/profileicon/" + profileIconId + ".png";
+            Console.WriteLine("iconType " + iconType);
+            Console.WriteLine("ResourcesUrl " + ResourcesUrl);
+
+            string iconUrl = null;
+
+            if (iconType.Equals("profile"))
+            {
+                iconUrl = ResourcesUrl + "/" + Version + "/img/profileicon/" + iconId + ".png";
+                Console.WriteLine("profile " + iconUrl);
+            }
+            else if (iconType.Equals("item"))
+            {
+                iconUrl = ResourcesUrl + "/" + Version + "/img/item/" + iconId + ".png";
+            }
+            else if(iconType.Equals("champion"))
+            {
+                iconId = GetChampionName(iconId);
+
+                Console.WriteLine("iconId " + iconId);
+
+                iconUrl = ResourcesUrl + "/" + Version + "/img/champion/" + iconId + ".png";
+
+                Console.WriteLine("iconUrl champ " + iconUrl);
+            }
+            
             var image = new BitmapImage();
             int BytesToRead = 100;
 
-            var httpResult = Get(profileIconUrl);
+            var httpResult = Get(iconUrl);
             var responseStream = httpResult.Content.ReadAsStreamAsync().Result;
 
             if (httpResult.StatusCode == HttpStatusCode.OK)
@@ -112,6 +152,23 @@ namespace LOLStatisticsManager.Model
             }
             return image;
         }
+
+        private String GetChampionName(string championId)
+        {
+            Console.WriteLine("championId " + championId);
+
+            string championName = null;
+            foreach (Champion championValue in championData.Data.Values)
+            {
+                if (championValue.Key.Equals(championId))
+                    championName = championValue.Name;
+            }
+
+            Console.WriteLine("championName " + championName);
+
+            return championName;
+        }
+       
         private HttpResponseMessage Get(string request)
         {
             HttpClient httpClient = new HttpClient();

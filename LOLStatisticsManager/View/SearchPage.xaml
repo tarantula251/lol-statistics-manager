@@ -6,28 +6,22 @@
       xmlns:local="clr-namespace:LOLStatisticsManager"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SearchPage">
-
-    <Grid>
+      Title="SearchPage" Height="570.4" VerticalAlignment="Center">
+    <Grid Height="600">
         <TextBlock x:Name="header" Margin="40,40,40,20" FontSize="36" Foreground="White" FontWeight="Bold" FontFamily="Rockwell Nova" VerticalAlignment="Top" Height="120" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center">DIVE INTO THE WORLD OF LEAGUE OF LEGENDS</TextBlock>
-        <Grid x:Name="canvas" Width="469" HorizontalAlignment="Left" Margin="38,236,0,188.4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBox x:Name="searchBox" Margin="0,0,24,0" MinHeight="60" MaxHeight="60" VerticalAlignment="Top" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontSize="24" Foreground="White" Padding="10,10,0,0" TextChanged="searchBox_TextChanged">
-                <TextBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF4BE4F3" Offset="0"/>
-                        <GradientStop Color="#FF1F589F" Offset="1"/>
-                    </LinearGradientBrush>
-                </TextBox.Background>
-            </TextBox>
-        </Grid>
-        <Button x:Name="searchBtn" Content="SEARCH" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="60" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,367,349.6,59.4" VerticalContentAlignment="Center" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="searchBtn_Click"></Button>
-        <StackPanel Margin="526,236,67.6,59.4">
+        <TextBox x:Name="searchBox" Margin="46,294,302,0" MinHeight="60" MaxHeight="60" VerticalAlignment="Top" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontSize="24" Foreground="White" Padding="10,10,0,0" TextChanged="searchBox_TextChanged">
+            <TextBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF4BE4F3" Offset="0"/>
+                    <GradientStop Color="#FF1F589F" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBox.Background>
+        </TextBox>
+        <Button x:Name="searchBtn" Content="SEARCH" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="60" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,456,353,84" VerticalContentAlignment="Center" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="searchBtn_Click"></Button>
+        <StackPanel Margin="530,294,63,1">
             <ListBox x:Name="listBox" ItemsSource="{Binding Localizations}" SelectedItem="{Binding SelectedCountry, Mode=TwoWay}" Background="#FF9BEBF7" Foreground="#FF1F1B74" ScrollViewer.CanContentScroll="False" Height="125" Margin="0,0,2,0" RenderTransformOrigin="0.5,0.5" FontSize="24" SelectionChanged="listBox_SelectionChanged" SelectedIndex="0"/>
         </StackPanel>
-        <TextBlock x:Name="labelLocation" HorizontalAlignment="Left" Height="39" Margin="526,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Foreground="White" FontSize="20" Text="Select server location:"></TextBlock>
-        <TextBlock x:Name="labelUsername" HorizontalAlignment="Left" Height="39" Margin="38,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Foreground="White" FontSize="20" Text="Type username:"/>
+        <TextBlock x:Name="labelLocation" HorizontalAlignment="Left" Height="39" Margin="530,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Foreground="White" FontSize="20" Text="Select server location:"></TextBlock>
+        <TextBlock x:Name="labelUsername" HorizontalAlignment="Left" Height="39" Margin="42,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Foreground="White" FontSize="20" Text="Type username:"/>
     </Grid>
 </Page>

@@ -9,7 +9,6 @@ namespace LOLStatisticsManager.Model
     class StatisticsController
     {
         private RiotAPIController RiotApiController { get; set; }
-        private string Region { get; set; }
         private string SummonerName { get; set; }
         private string AccountId { get; set; }
         private string SummonerId { get; set; }
@@ -18,10 +17,9 @@ namespace LOLStatisticsManager.Model
 
         private string QueueTypeFlex = "FLEX";
 
-        public StatisticsController(RiotAPIController apiController, string region, string summonerName)
+        public StatisticsController(RiotAPIController apiController, string summonerName)
         {
             this.RiotApiController = apiController;
-            this.Region = region;
             this.SummonerName = summonerName;
         }
 
