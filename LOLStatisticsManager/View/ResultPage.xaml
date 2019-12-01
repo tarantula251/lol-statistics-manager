@@ -88,10 +88,7 @@
                 <DataGridTemplateColumn Header="Image" CanUserResize="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image x:Name="championIconContainer" HorizontalAlignment="Left" Height="60" Margin="5,9,0,0" VerticalAlignment="Top">
-                                <Image.Source>
-                                    <BitmapImage x:Name="championIcon" UriSource="" DecodePixelHeight="50" DecodePixelWidth="1" />
-                                </Image.Source>
+                            <Image x:Name="championIconContainer" Source="{Binding ChampionIconSource}" HorizontalAlignment="Left" Height="60" Margin="5,9,0,0" VerticalAlignment="Top">
                             </Image>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

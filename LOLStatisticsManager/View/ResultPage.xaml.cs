@@ -6,6 +6,7 @@ using System.Windows;
 using LOLStatisticsManager.Controller;
 using LOLStatisticsManager.Model;
 using System.Windows.Media;
+using LOLStatisticsManager.Model.DTO;
 
 namespace LOLStatisticsManager
 {
@@ -66,9 +67,12 @@ namespace LOLStatisticsManager
             List<ChampionInfo> championsInfo = new List<ChampionInfo>();
             foreach (var stat in chonlstats)
             {
+                //Console.WriteLine("stat.Champion.ToString() == " + stat.Champion.ToString());
+                //Console.WriteLine("resourcesManager.GetChampionName(stat.Champion.ToString()), == " + resourcesManager.GetChampionName(stat.Champion.ToString()));
+                Champion champion = resourcesManager.GetChampion(stat.Champion.ToString());
                 ChampionInfo info = new ChampionInfo
-                { 
-                    Name = stat.Champion.ToString(),
+                {
+                    Name = champion.Name,
                     Lane = stat.Lane,
                     PickPercent = stat.PickPercent.ToString(),
                     WinPercent = stat.WinPercent.ToString(),
@@ -76,14 +80,12 @@ namespace LOLStatisticsManager
                     TotalDamageDealtAvgPerMin = stat.TotalDamageDealtAvgPerMin.ToString(),
                     GoldEarnedAvgPerMin = stat.GoldEarnedAvgPerMin.ToString(),
                     MinionsKilledAvgPerMin = stat.MinionsKilledAvgPerMin.ToString(),
-                    FirstBloodParticipationPercent = stat.FirstBloodParticipationPercent.ToString()
-                //    ChampionIconSource = resourcesManager.GetIcon(stat.Champion.ToString(), "champion")
+                    FirstBloodParticipationPercent = stat.FirstBloodParticipationPercent.ToString(),
+                    ChampionIconSource = resourcesManager.GetIcon(champion.Id, "champion")
                 }; //TODO get champion name basing on stat.Champion => Champion Id
                 championsInfo.Add(info);
             }
             championGrid.ItemsSource = championsInfo;
-
-            Console.WriteLine("w obiekcie ChampionInfo"+championsInfo[0].ChampionIconSource);
 
             //match section
             //Dictionary<string, object> matchReferenceData = statsController.GetMatchReferenceData();
