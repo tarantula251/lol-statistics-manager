@@ -68,6 +68,7 @@
     <Compile Include="Model\API\RiotAPI.cs" />
     <Compile Include="Model\API\League_V4.cs" />
     <Compile Include="Model\API\Summoner_V4.cs" />
+    <Compile Include="Model\Cache.cs" />
     <Compile Include="Model\DTO\Champion.cs" />
     <Compile Include="Model\DTO\ChampionData.cs" />
     <Compile Include="Model\DTO\ChampionMasteryDTO.cs" />

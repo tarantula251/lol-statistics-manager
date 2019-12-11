@@ -1,5 +1,8 @@
-﻿namespace LOLStatisticsManager.Model
+﻿using System;
+
+namespace LOLStatisticsManager.Model
 {
+    [Serializable]
     public class SummonerDTO
     {
         public int ProfileIconId { get; set; }

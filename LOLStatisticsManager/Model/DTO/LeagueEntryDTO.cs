@@ -1,5 +1,8 @@
-﻿namespace LOLStatisticsManager.Model
+﻿using System;
+
+namespace LOLStatisticsManager.Model
 {
+    [Serializable]
     public class LeagueEntryDTO
     {
         public string QueueType { get; set; }

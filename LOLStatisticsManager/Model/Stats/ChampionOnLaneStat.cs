@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LOLStatisticsManager.Model.Stats
 {
+    [Serializable]
     public class ChampionOnLaneStat
     {
         public int Champion { get; set; }

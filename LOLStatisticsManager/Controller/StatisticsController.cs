@@ -8,24 +8,39 @@ namespace LOLStatisticsManager.Model
 {
     class StatisticsController
     {
+        private Cache cache = new Cache();
         private RiotAPIController RiotApiController { get; set; }
         private string SummonerName { get; set; }
         private string AccountId { get; set; }
         private string SummonerId { get; set; }
-
-        private string QueueTypeSolo = "SOLO";
-
-        private string QueueTypeFlex = "FLEX";
+        private string SummonerUniqueName { get; set; }
+        private const string QueueTypeSolo = "SOLO";
+        private const string QueueTypeFlex = "FLEX";
+        private const string ChampionOnLateStatCacheSubdirectoryName = "champions_statistics";
+        private const string SummonerDataCacheSubdirectoryName = "summoner_data";
+        private const string LeagueEntriesCacheSubdirectoryName = "legaue_entries";
+        public bool CachingEnabled { get; set; }
 
         public StatisticsController(RiotAPIController apiController, string summonerName)
         {
             this.RiotApiController = apiController;
             this.SummonerName = summonerName;
+            this.SummonerUniqueName = SummonerName + "_" + apiController.Region; 
+            CachingEnabled = true;
         }
 
         public List<ChampionOnLaneStat> GetChampionOnLaneStats()
         {
-            List<ChampionOnLaneStat> result = new List<ChampionOnLaneStat>();
+            List<ChampionOnLaneStat> result;
+
+            if (CachingEnabled)
+            {
+                result = cache.Load<List<ChampionOnLaneStat>>(SummonerUniqueName, ChampionOnLateStatCacheSubdirectoryName);
+                if (result != null) return result;
+            }
+
+            result = new List<ChampionOnLaneStat>();
+
             Dictionary<string, Tuple<int, ChampionOnLaneStat>> championOnLaneMap = new Dictionary<string, Tuple<int, ChampionOnLaneStat>>();
             MatchlistDTO matchList = RiotApiController.GetMatchlistByAccount(AccountId);
             int matchesInCurrentSeason = 0;
@@ -94,13 +109,21 @@ namespace LOLStatisticsManager.Model
 
                 result.Add(stat);
             }
-
+            if (CachingEnabled) cache.Store(result, SummonerUniqueName, ChampionOnLateStatCacheSubdirectoryName);
             return result;
         }
 
         public Dictionary<string, string> GetSummonerData()
         {
-            SummonerDTO summoner = RiotApiController.GetSummonerByName(SummonerName);
+            SummonerDTO summoner = null;
+            bool loadedFromCache = true;
+            if (CachingEnabled) summoner = cache.Load<SummonerDTO>(SummonerUniqueName, SummonerDataCacheSubdirectoryName);
+            if (summoner == null)
+            {
+                loadedFromCache = false;
+                summoner = RiotApiController.GetSummonerByName(SummonerName);
+            }
+
             long unixDate = summoner.RevisionDate;
             DateTime startdate = DateTimeOffset.FromUnixTimeMilliseconds(unixDate).UtcDateTime;
             Dictionary<string, string> resultMap = new Dictionary<string, string>()
@@ -114,12 +137,22 @@ namespace LOLStatisticsManager.Model
             AccountId = summoner.AccountId;
             SummonerId = summoner.Id;
 
+            if (CachingEnabled && !loadedFromCache) cache.Store(summoner, SummonerUniqueName, SummonerDataCacheSubdirectoryName);
+
             return resultMap;                                   
         }
 
         public List<Dictionary<string, string>> GetLeagueEntryData()
         {
-            List<LeagueEntryDTO> leagueEntryList = RiotApiController.GetEntryBySummoner(SummonerId);
+            List<LeagueEntryDTO> leagueEntryList = null;
+            bool loadedFromCache = true;
+            if (CachingEnabled) leagueEntryList = cache.Load<List<LeagueEntryDTO>>(SummonerUniqueName, LeagueEntriesCacheSubdirectoryName);
+            if (leagueEntryList == null)
+            {
+                loadedFromCache = false;
+                leagueEntryList = RiotApiController.GetEntryBySummoner(SummonerId);
+            }
+
             List<Dictionary<string, string>> resultList = new List<Dictionary<string, string>>();
             if (leagueEntryList != null && leagueEntryList.Count > 0)
             {
@@ -147,6 +180,8 @@ namespace LOLStatisticsManager.Model
                     resultList.Add(leagueEntryDictionary);
                 }
             }
+
+            if (CachingEnabled && !loadedFromCache) cache.Store(leagueEntryList, SummonerUniqueName, LeagueEntriesCacheSubdirectoryName);
 
             return resultList;
         }

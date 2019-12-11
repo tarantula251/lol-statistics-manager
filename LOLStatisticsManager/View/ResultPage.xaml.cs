@@ -1,12 +1,10 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using LOLStatisticsManager.Controller;
+using LOLStatisticsManager.Model;
+using LOLStatisticsManager.Model.DTO;
 using System.Collections.Generic;
 using System.Windows;
-
-using LOLStatisticsManager.Controller;
-using LOLStatisticsManager.Model;
+using System.Windows.Controls;
 using System.Windows.Media;
-using LOLStatisticsManager.Model.DTO;
 
 namespace LOLStatisticsManager
 {
@@ -61,11 +59,11 @@ namespace LOLStatisticsManager
                 DisplayNoRankDataLabels();
             }
 
-            var chonlstats = statsController.GetChampionOnLaneStats();
+            var championOnLaneStats = statsController.GetChampionOnLaneStats();
             
             //champion info
             List<ChampionInfo> championsInfo = new List<ChampionInfo>();
-            foreach (var stat in chonlstats)
+            foreach (var stat in championOnLaneStats)
             {
                 //Console.WriteLine("stat.Champion.ToString() == " + stat.Champion.ToString());
                 //Console.WriteLine("resourcesManager.GetChampionName(stat.Champion.ToString()), == " + resourcesManager.GetChampionName(stat.Champion.ToString()));
