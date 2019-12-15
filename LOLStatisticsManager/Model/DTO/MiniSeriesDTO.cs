@@ -1,5 +1,8 @@
-﻿namespace LOLStatisticsManager.Model
+﻿using System;
+
+namespace LOLStatisticsManager.Model
 {
+    [Serializable]
     public class MiniSeriesDTO
     {
         public string Progress { get; set; }
