@@ -1,6 +1,7 @@
 ﻿using LOLStatisticsManager.Controller;
 using LOLStatisticsManager.Model;
 using LOLStatisticsManager.Model.DTO;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,10 +65,20 @@ namespace LOLStatisticsManager
             //champion info
             List<ChampionInfo> championsInfo = new List<ChampionInfo>();
             foreach (var stat in championOnLaneStats)
-            {
-                //Console.WriteLine("stat.Champion.ToString() == " + stat.Champion.ToString());
+            {               
                 //Console.WriteLine("resourcesManager.GetChampionName(stat.Champion.ToString()), == " + resourcesManager.GetChampionName(stat.Champion.ToString()));
                 Champion champion = resourcesManager.GetChampion(stat.Champion.ToString());
+
+                //create a list of top items image sources
+                var topItemsImageSources = new List<ImageSource>(); 
+                if (!stat.TopItem0.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem0.ToString(), "item"));
+                if (!stat.TopItem1.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem1.ToString(), "item"));
+                if (!stat.TopItem2.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem2.ToString(), "item"));
+                if (!stat.TopItem3.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem3.ToString(), "item"));
+                if (!stat.TopItem4.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem4.ToString(), "item"));
+                if (!stat.TopItem5.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem5.ToString(), "item"));
+                if (!stat.TopItem6.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem6.ToString(), "item"));
+
                 ChampionInfo info = new ChampionInfo
                 {
                     Name = champion.Name,
@@ -79,8 +90,9 @@ namespace LOLStatisticsManager
                     GoldEarnedAvgPerMin = stat.GoldEarnedAvgPerMin.ToString(),
                     MinionsKilledAvgPerMin = stat.MinionsKilledAvgPerMin.ToString(),
                     FirstBloodParticipationPercent = stat.FirstBloodParticipationPercent.ToString(),
-                    ChampionIconSource = resourcesManager.GetIcon(champion.Id, "champion")
-                }; //TODO get champion name basing on stat.Champion => Champion Id
+                    ChampionIconSource = resourcesManager.GetIcon(champion.Id, "champion"),
+                    TopItemsIconSource = topItemsImageSources
+                };
                 championsInfo.Add(info);
             }
             championGrid.ItemsSource = championsInfo;
@@ -174,5 +186,6 @@ namespace LOLStatisticsManager
         public string MinionsKilledAvgPerMin { get; set; }
         public string FirstBloodParticipationPercent { get; set; }
         public ImageSource ChampionIconSource { get; set; }
+        public List<ImageSource> TopItemsIconSource { get; set; }
     }
 }

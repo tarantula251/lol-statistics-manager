@@ -90,7 +90,13 @@ namespace LOLStatisticsManager.Model
                 championOnLaneStat.GoldEarnedAvgPerMin += participantStats.GoldEarned / gameDurationInMinutes;
                 championOnLaneStat.MinionsKilledAvgPerMin += participantStats.TotalMinionsKilled / gameDurationInMinutes;
                 if (participantStats.FirstBloodAssist || participantStats.FirstBloodKill) championOnLaneStat.FirstBloodParticipationPercent += 1.0f;
-
+                championOnLaneStat.TopItem0 = participantStats.Item0;
+                championOnLaneStat.TopItem1 = participantStats.Item1;
+                championOnLaneStat.TopItem2 = participantStats.Item2;
+                championOnLaneStat.TopItem3 = participantStats.Item3;
+                championOnLaneStat.TopItem4 = participantStats.Item4;
+                championOnLaneStat.TopItem5 = participantStats.Item5;
+                championOnLaneStat.TopItem6 = participantStats.Item6;
             }
 
             foreach(var statPair in championOnLaneMap)

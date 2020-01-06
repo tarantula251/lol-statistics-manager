@@ -65,20 +65,25 @@ namespace LOLStatisticsManager.Model
 
         public BitmapImage GetIcon(string iconId, string iconType)
         {
-
             string iconUrl = null;
 
-            if (iconType.Equals("profile"))
+            switch (iconType)
             {
-                iconUrl = ResourcesUrl + "/" + Version + "/img/profileicon/" + iconId + ".png";
-            }
-            else if (iconType.Equals("item"))
-            {
-                iconUrl = ResourcesUrl + "/" + Version + "/img/item/" + iconId + ".png";
-            }
-            else if(iconType.Equals("champion"))
-            {
-                iconUrl = ResourcesUrl + "/" + Version + "/img/champion/" + iconId + ".png";
+                case "profile":
+                    {
+                        iconUrl = ResourcesUrl + "/" + Version + "/img/profileicon/" + iconId + ".png";
+                        break;
+                    }
+                case "item":
+                    {
+                        iconUrl = ResourcesUrl + "/" + Version + "/img/item/" + iconId + ".png";
+                        break;
+                    }
+                case "champion":
+                    {
+                        iconUrl = ResourcesUrl + "/" + Version + "/img/champion/" + iconId + ".png";
+                        break;
+                    }
             }
             
             var image = new BitmapImage();

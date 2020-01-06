@@ -18,6 +18,7 @@ namespace LOLStatisticsManager.Model.Stats
         public float WinPercent { get; set; }
         public float FirstBloodParticipationPercent { get; set; }
         public List<RuneDTO> TopRunes { get; set; }
+        public int TopItem0 { get; set; }
         public int TopItem1 { get; set; }
         public int TopItem2 { get; set; }
         public int TopItem3 { get; set; }
