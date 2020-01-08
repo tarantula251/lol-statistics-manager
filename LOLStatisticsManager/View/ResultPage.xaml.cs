@@ -65,9 +65,30 @@ namespace LOLStatisticsManager
             //champion info
             List<ChampionInfo> championsInfo = new List<ChampionInfo>();
             foreach (var stat in championOnLaneStats)
-            {               
-                //Console.WriteLine("resourcesManager.GetChampionName(stat.Champion.ToString()), == " + resourcesManager.GetChampionName(stat.Champion.ToString()));
+            {
                 Champion champion = resourcesManager.GetChampion(stat.Champion.ToString());
+
+                //create a list of top spells image sources
+                var topSpellsImageSources = new List<ImageSource>();
+                Spell topSpell1 = null;
+                Spell topSpell2 = null;
+                if (!stat.TopSpell1.Equals(0))
+                {
+                    topSpell1 = resourcesManager.GetSpell(stat.TopSpell1);
+                }
+                if (!stat.TopSpell2.Equals(0))
+                {
+                    topSpell2 = resourcesManager.GetSpell(stat.TopSpell2);
+                }
+
+                if (topSpell1 != null && topSpell1.Id != null)
+                {
+                    topSpellsImageSources.Add(resourcesManager.GetIcon(topSpell1.Id, "spell"));                   
+                }
+                if (topSpell2 != null && topSpell2.Id != null)
+                {
+                    topSpellsImageSources.Add(resourcesManager.GetIcon(topSpell2.Id, "spell"));
+                }
 
                 //create a list of top items image sources
                 var topItemsImageSources = new List<ImageSource>(); 
@@ -77,7 +98,7 @@ namespace LOLStatisticsManager
                 if (!stat.TopItem3.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem3.ToString(), "item"));
                 if (!stat.TopItem4.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem4.ToString(), "item"));
                 if (!stat.TopItem5.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem5.ToString(), "item"));
-                if (!stat.TopItem6.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem6.ToString(), "item"));
+                if (!stat.TopItem6.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem6.ToString(), "item"));                                
 
                 ChampionInfo info = new ChampionInfo
                 {
@@ -91,18 +112,12 @@ namespace LOLStatisticsManager
                     MinionsKilledAvgPerMin = stat.MinionsKilledAvgPerMin.ToString(),
                     FirstBloodParticipationPercent = stat.FirstBloodParticipationPercent.ToString(),
                     ChampionIconSource = resourcesManager.GetIcon(champion.Id, "champion"),
-                    TopItemsIconSource = topItemsImageSources
+                    TopItemsIconSource = topItemsImageSources,
+                    TopSpellsIconSource = topSpellsImageSources
                 };
                 championsInfo.Add(info);
             }
             championGrid.ItemsSource = championsInfo;
-
-            //match section
-            //Dictionary<string, object> matchReferenceData = statsController.GetMatchReferenceData();
-            //Dictionary<string, object> matchData = statsController.GetMatchData();
-
-            //league mastery section
-            //List<Dictionary<string, object>> championMasteryData = statsController.GetChampionMasteryData();
         }
 
         private void DisplayProfileImage(string profileIconId)
@@ -187,5 +202,6 @@ namespace LOLStatisticsManager
         public string FirstBloodParticipationPercent { get; set; }
         public ImageSource ChampionIconSource { get; set; }
         public List<ImageSource> TopItemsIconSource { get; set; }
+        public List<ImageSource> TopSpellsIconSource { get; set; }
     }
 }

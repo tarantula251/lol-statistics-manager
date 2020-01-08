@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace LOLStatisticsManager.Model
 {
     public class ParticipantDTO
@@ -14,5 +13,5 @@ namespace LOLStatisticsManager.Model
         public string HighestAchievedSeasonTier { get; set; }
         public int Spell1Id { get; set; }
         public int ChampionId { get; set; }
-    }
+    }   
 }

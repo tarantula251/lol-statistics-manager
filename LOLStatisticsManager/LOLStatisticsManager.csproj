@@ -71,6 +71,7 @@
     <Compile Include="Model\Cache.cs" />
     <Compile Include="Model\DTO\Champion.cs" />
     <Compile Include="Model\DTO\ChampionData.cs" />
+    <Compile Include="Model\DTO\SpellData.cs" />
     <Compile Include="Model\DTO\ChampionMasteryDTO.cs" />
     <Compile Include="Model\DTO\LeagueEntryDTO.cs" />
     <Compile Include="Model\DTO\MasteryDTO.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Model\DTO\ParticipantTimelineDTO.cs" />
     <Compile Include="Model\DTO\PlayerDTO.cs" />
     <Compile Include="Model\DTO\RealmData.cs" />
+    <Compile Include="Model\DTO\Spell.cs" />
     <Compile Include="Model\ResourcesManager.cs" />
     <Compile Include="Model\DTO\RuneDTO.cs" />
     <Compile Include="Model\DTO\SummonerDTO.cs" />

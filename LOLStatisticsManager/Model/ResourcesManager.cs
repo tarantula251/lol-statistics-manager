@@ -19,6 +19,8 @@ namespace LOLStatisticsManager.Model
         private RealmData realmData;
 
         private ChampionData championData;
+
+        private SpellData spellData;
         string ResourcesUrl { get; set; }        
 
         private Dictionary<string, string> routingValuesMap = new Dictionary<string, string>() {
@@ -56,6 +58,15 @@ namespace LOLStatisticsManager.Model
             {
                 championData = JsonConvert.DeserializeObject<ChampionData>(resultContent);
             }
+
+            //spell data
+            httpResult = Get("https://ddragon.leagueoflegends.com/cdn/" + Version + "/data/en_US/summoner.json");
+            resultContent = httpResult.Content.ReadAsStringAsync().Result;
+
+            if (httpResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                spellData = JsonConvert.DeserializeObject<SpellData>(resultContent);
+            }
         }
 
         public string GetRoutingValue(string region)
@@ -82,6 +93,11 @@ namespace LOLStatisticsManager.Model
                 case "champion":
                     {
                         iconUrl = ResourcesUrl + "/" + Version + "/img/champion/" + iconId + ".png";
+                        break;
+                    }
+                case "spell":
+                    {
+                        iconUrl = ResourcesUrl + "/" + Version + "/img/spell/" + iconId + ".png";
                         break;
                     }
             }
@@ -157,13 +173,25 @@ namespace LOLStatisticsManager.Model
             }
             return null;
         }
-       
+
+        public Spell GetSpell(int spellKey)
+        {
+            foreach (Spell spellValue in spellData.Data.Values)
+            {
+                if (spellValue.Key.Equals(spellKey))
+                {
+                    return spellValue;
+                }
+            }
+            return null;
+        }
+
         private HttpResponseMessage Get(string request)
         {
             HttpClient httpClient = new HttpClient();
             var result = httpClient.GetAsync(request);
             result.Wait();
             return result.Result;
-        }        
+        }
     }
 }
