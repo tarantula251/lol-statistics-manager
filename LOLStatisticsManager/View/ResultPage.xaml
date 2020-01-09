@@ -83,55 +83,64 @@
             <Label x:Name="flexNotRanked" Content="NOT RANKED FLEX" Grid.Column="2" Margin="42.4,100,0,0" Foreground="#FF473A71" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Opacity="0.7" Visibility="Hidden"/>
         </Grid>
 
-        <DataGrid x:Name="championGrid" Grid.Row="0" Margin="0,230,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
+        <DataGrid x:Name="championGrid" Grid.Row="0" Margin="0,200,0,100" VerticalAlignment="Top" MaxWidth="600" AutoGenerateColumns="False" CanUserAddRows="false" IsReadOnly="true" CanUserDeleteRows="False">
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="OnMouseDown"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="LightBlue"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Image" CanUserResize="False" Width="*">
+                <DataGridTemplateColumn Header="Image" CanUserResize="False" MinWidth="70">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image x:Name="championIconContainer" Source="{Binding ChampionIconSource}" HorizontalAlignment="Left" Height="60" Margin="5,9,0,0" VerticalAlignment="Top">
+                            <Image x:Name="championIconContainer" Source="{Binding ChampionIconSource}" HorizontalAlignment="Left" Height="60" Margin="5,5,5,5" VerticalAlignment="Top">
                             </Image>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding Lane}" Width="*" Header="Lane" CanUserResize="False"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="250" CanUserResize="False" Foreground="#2f2f8e" FontSize="16" FontWeight="Bold" />
+                <DataGridTextColumn Binding="{Binding Lane}" Width="250" Header="Lane" CanUserResize="False" Foreground="#2f2f8e" FontSize="16" FontWeight="Bold"/>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="0" Background="BlanchedAlmond" Padding="10">
+                    <Border BorderThickness="0" Background="#565697" Padding="10">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Chance of Pick: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding PickPercent}" VerticalAlignment="Center" />
+                                <TextBlock FontSize="14" Text="Chance of Pick: " VerticalAlignment="Center" Foreground="#FFAFDAE5" FontWeight="Normal" Margin="0, 5, 20, 0"/>
+                                <TextBlock FontSize="14" Foreground="White" FontWeight="Bold" Margin="0, 5, 0, 0" Text="{Binding PickPercent}" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Wins: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding WinPercent}" VerticalAlignment="Center" />
+                                <TextBlock FontSize="14" Text="Wins: " VerticalAlignment="Center" Foreground="#FFAFDAE5" FontWeight="Normal" Margin="0, 5, 20, 0"/>
+                                <TextBlock FontSize="14" Foreground="White" FontWeight="Bold" Margin="0, 5, 0, 0" Text="{Binding WinPercent}" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="K/D/A: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding KDA}" VerticalAlignment="Center" />
+                                <TextBlock FontSize="14" Text="K/D/A: " VerticalAlignment="Center" Foreground="#FFAFDAE5" FontWeight="Normal" Margin="0, 5, 20, 0"/>
+                                <TextBlock FontSize="14" Foreground="White" FontWeight="Bold" Margin="0, 5, 0, 0" Text="{Binding KDA}" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Total Damage Dealt/Min: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding TotalDamageDealtAvgPerMin}" VerticalAlignment="Center" />
+                                <TextBlock FontSize="14" Text="Total Damage Dealt/Min: " VerticalAlignment="Center" Foreground="#FFAFDAE5" FontWeight="Normal" Margin="0, 5, 20, 0"/>
+                                <TextBlock FontSize="14" Foreground="White" FontWeight="Bold" Margin="0, 5, 0, 0" Text="{Binding TotalDamageDealtAvgPerMin}" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Gold Earned/Min: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding GoldEarnedAvgPerMin}" VerticalAlignment="Center" />
+                                <TextBlock FontSize="14" Text="Gold Earned/Min: " VerticalAlignment="Center" Foreground="#FFAFDAE5" FontWeight="Normal" Margin="0, 5, 20, 0"/>
+                                <TextBlock FontSize="14" Foreground="White" FontWeight="Bold" Margin="0, 5, 0, 0" Text="{Binding GoldEarnedAvgPerMin}" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Minions Killed/Min: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding MinionsKilledAvgPerMin}" VerticalAlignment="Center" />
+                                <TextBlock FontSize="14" Text="Minions Killed/Min: " VerticalAlignment="Center" Foreground="#FFAFDAE5" FontWeight="Normal" Margin="0, 5, 20, 0"/>
+                                <TextBlock FontSize="14" Foreground="White" FontWeight="Bold" Margin="0, 5, 0, 0" Text="{Binding MinionsKilledAvgPerMin}" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Chance of First Blood Participation: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding FirstBloodParticipationPercent}" VerticalAlignment="Center" />
+                                <TextBlock FontSize="14" Text="Chance of First Blood Participation: " VerticalAlignment="Center" Foreground="#FFAFDAE5" FontWeight="Normal" Margin="0, 5, 20, 0"/>
+                                <TextBlock FontSize="14" Foreground="White" FontWeight="Bold" Margin="0, 5, 0, 0" Text="{Binding FirstBloodParticipationPercent}" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <!-- top items-->
-                                <Label x:Name="itemsLabel" Content="Top Items:" HorizontalAlignment="Left" Margin="-5,0,10,0" VerticalAlignment="Top" Height="26" Width="80"/>
-                                <ItemsControl ItemsSource="{Binding TopItemsIconSource}" Margin="0,5,0,0" Background="Transparent" VerticalAlignment="Bottom" Height="61">
+                                <Label x:Name="itemsLabel" Content="Top Items:" Foreground="#FFAFDAE5" FontSize="14" HorizontalAlignment="Left" Margin="-5,5,20,0" VerticalAlignment="Top" Height="35" Width="80"/>
+                                <ItemsControl ItemsSource="{Binding TopItemsIconSource}" Margin="0,10,0,0" Background="Transparent" VerticalAlignment="Bottom" Height="61">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid Background="Transparent" Rows="1" Margin="1,1,1,1" Columns="7" HorizontalAlignment="Stretch"/>
@@ -151,7 +160,7 @@
                                                         ToolTipService.ShowOnDisabled="true" 
                                                         ToolTipService.IsEnabled="true">
                                                 <Image.ToolTip>
-                                                    <TextBlock Height="10" Width="20" Text="It's an item :P" FontSize="8"/>
+                                                    <TextBlock Text="AAA" Height="10" Width="20" FontSize="8"/>
                                                 </Image.ToolTip>
                                             </Image>
                                         </HierarchicalDataTemplate>
@@ -160,7 +169,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <!-- top spells-->
-                                <Label x:Name="spellsLabel" Content="Top Spells:" HorizontalAlignment="Left" Margin="-5,10,10,0" VerticalAlignment="Top" Height="26" Width="80"/>
+                                <Label x:Name="spellsLabel" Content="Top Spells:" Foreground="#FFAFDAE5" FontSize="14" HorizontalAlignment="Left" Margin="-5,10,20,0" VerticalAlignment="Top" Height="35" Width="80"/>
                                 <ItemsControl ItemsSource="{Binding TopSpellsIconSource}" Margin="0,15,0,0" Background="Transparent" VerticalAlignment="Bottom" Height="61">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -181,7 +190,7 @@
                                                         ToolTipService.ShowOnDisabled="true" 
                                                         ToolTipService.IsEnabled="true">
                                                 <Image.ToolTip>
-                                                    <TextBlock Height="10" Width="20" Text="It's an item :P" FontSize="8"/>
+                                                    <TextBlock Text="BBB" Height="10" Width="20" FontSize="8"/>
                                                 </Image.ToolTip>
                                             </Image>
                                         </HierarchicalDataTemplate>
@@ -193,7 +202,8 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
+        <Grid x:Name="returnGrid" HorizontalAlignment="Center" Margin="0,100,0,30" VerticalAlignment="Bottom">
+            <Button x:Name="returnBtn" Content="RETURN" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="43" Margin="50,50,50,0" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="returnBtn_Click" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
     </Grid>
 </Page>
-
-<!--Button x:Name="returnBtn" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="43" Margin="10,0,0,0.8" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="returnBtn_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left"/-->

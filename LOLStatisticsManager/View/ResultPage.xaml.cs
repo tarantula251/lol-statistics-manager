@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace LOLStatisticsManager
@@ -81,15 +82,12 @@ namespace LOLStatisticsManager
                     topSpell2 = resourcesManager.GetSpell(stat.TopSpell2);
                 }
 
-                if (topSpell1 != null && topSpell1.Id != null)
+                if (topSpell1 != null && topSpell1.Id != null && topSpell2 != null && topSpell2.Id != null)
                 {
-                    topSpellsImageSources.Add(resourcesManager.GetIcon(topSpell1.Id, "spell"));                   
-                }
-                if (topSpell2 != null && topSpell2.Id != null)
-                {
+                    topSpellsImageSources.Add(resourcesManager.GetIcon(topSpell1.Id, "spell"));
                     topSpellsImageSources.Add(resourcesManager.GetIcon(topSpell2.Id, "spell"));
-                }
-
+                }     
+                
                 //create a list of top items image sources
                 var topItemsImageSources = new List<ImageSource>(); 
                 if (!stat.TopItem0.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem0.ToString(), "item"));
@@ -186,6 +184,15 @@ namespace LOLStatisticsManager
         private void returnBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new SearchPage());
+        }
+
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            if (row != null)
+            {
+                row.DetailsVisibility = row.IsSelected ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            }
         }
     }
 
