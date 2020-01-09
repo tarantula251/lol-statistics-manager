@@ -197,6 +197,36 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <!-- top runes-->
+                                <Label x:Name="runesLabel" Content="Top Runes:" Foreground="#FFAFDAE5" FontSize="14" HorizontalAlignment="Left" Margin="-5,10,20,0" VerticalAlignment="Top" Height="35" Width="80"/>
+                                <ItemsControl ItemsSource="{Binding TopRunesIconSource}" Margin="0,15,0,0" Background="Transparent" VerticalAlignment="Bottom" Height="61">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Background="Transparent" Rows="1" Margin="1,1,1,1" Columns="2" HorizontalAlignment="Stretch"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <HierarchicalDataTemplate>
+                                            <Image Source="{Binding}" x:Name="topSpellIconContainer" Width="61" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill"
+                                                        ToolTipService.InitialShowDelay="1000"
+                                                        ToolTipService.ShowDuration="7000"
+                                                        ToolTipService.BetweenShowDelay="2000"
+                                                        ToolTipService.Placement="Right" 
+                                                        ToolTipService.PlacementRectangle="50,0,0,0"
+                                                        ToolTipService.HorizontalOffset="10" 
+                                                        ToolTipService.VerticalOffset="10"
+                                                        ToolTipService.HasDropShadow="false"
+                                                        ToolTipService.ShowOnDisabled="true" 
+                                                        ToolTipService.IsEnabled="true">
+                                                <Image.ToolTip>
+                                                    <TextBlock Text="BBB" Height="10" Width="20" FontSize="8"/>
+                                                </Image.ToolTip>
+                                            </Image>
+                                        </HierarchicalDataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
                         </StackPanel>
                     </Border>
                 </DataTemplate>

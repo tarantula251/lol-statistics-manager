@@ -86,8 +86,30 @@ namespace LOLStatisticsManager
                 {
                     topSpellsImageSources.Add(resourcesManager.GetIcon(topSpell1.Id, "spell"));
                     topSpellsImageSources.Add(resourcesManager.GetIcon(topSpell2.Id, "spell"));
-                }     
-                
+                }
+
+                //create a list of top runes image sources
+                var topRunesImageSources = new List<ImageSource>();
+                List<RuneDTO> runesList = stat.TopRunes;
+                if (runesList != null && runesList.Count > 0)
+                {
+                    RuneDTO rune1 = runesList[0];
+                    RuneDTO rune2 = runesList[1];
+                    Console.WriteLine("rune1 RuneId " + rune1.RuneId.ToString());
+                    Console.WriteLine("rune1 Rank " + rune1.Rank.ToString());
+
+                    Console.WriteLine("rune2 RuneId " + rune2.RuneId.ToString());
+                    Console.WriteLine("rune2 Rank " + rune2.Rank.ToString());
+                    string topRune1Icon = (rune1 != null && !rune1.RuneId.Equals(0)) ? resourcesManager.GetRuneDataIcon(rune1.RuneId) : null;
+                    string topRune2Icon = (rune2 != null && !rune2.RuneId.Equals(0)) ? resourcesManager.GetRuneDataIcon(rune2.RuneId) : null;
+
+                    if (topRune1Icon != null && topRune2Icon != null)
+                    {
+                        topRunesImageSources.Add(resourcesManager.GetIcon(topRune1Icon, "rune"));
+                        topRunesImageSources.Add(resourcesManager.GetIcon(topRune2Icon, "rune"));
+                    }
+                }
+
                 //create a list of top items image sources
                 var topItemsImageSources = new List<ImageSource>(); 
                 if (!stat.TopItem0.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem0.ToString(), "item"));
@@ -111,7 +133,8 @@ namespace LOLStatisticsManager
                     FirstBloodParticipationPercent = stat.FirstBloodParticipationPercent.ToString(),
                     ChampionIconSource = resourcesManager.GetIcon(champion.Id, "champion"),
                     TopItemsIconSource = topItemsImageSources,
-                    TopSpellsIconSource = topSpellsImageSources
+                    TopSpellsIconSource = topSpellsImageSources,
+                    TopRunesIconSource = topRunesImageSources
                 };
                 championsInfo.Add(info);
             }
@@ -210,5 +233,6 @@ namespace LOLStatisticsManager
         public ImageSource ChampionIconSource { get; set; }
         public List<ImageSource> TopItemsIconSource { get; set; }
         public List<ImageSource> TopSpellsIconSource { get; set; }
+        public List<ImageSource> TopRunesIconSource { get; set; }
     }
 }

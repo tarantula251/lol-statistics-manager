@@ -21,6 +21,8 @@ namespace LOLStatisticsManager.Model
         private ChampionData championData;
 
         private SpellData spellData;
+
+        private List<RuneData> runeDataList;
         string ResourcesUrl { get; set; }        
 
         private Dictionary<string, string> routingValuesMap = new Dictionary<string, string>() {
@@ -67,6 +69,15 @@ namespace LOLStatisticsManager.Model
             {
                 spellData = JsonConvert.DeserializeObject<SpellData>(resultContent);
             }
+
+            //rune data
+            httpResult = Get("https://ddragon.leagueoflegends.com/cdn/" + Version + "/data/en_US/runesReforged.json");
+            resultContent = httpResult.Content.ReadAsStringAsync().Result;
+
+            if (httpResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                runeDataList = JsonConvert.DeserializeObject<List<RuneData>>(resultContent);
+            }
         }
 
         public string GetRoutingValue(string region)
@@ -98,6 +109,12 @@ namespace LOLStatisticsManager.Model
                 case "spell":
                     {
                         iconUrl = ResourcesUrl + "/" + Version + "/img/spell/" + iconId + ".png";
+                        break;
+                    }
+                case "rune":
+                    {
+                        iconUrl = ResourcesUrl + "/img/" + iconId;
+                        Console.WriteLine("iconUrl " + iconUrl);
                         break;
                     }
             }
@@ -181,6 +198,37 @@ namespace LOLStatisticsManager.Model
                 if (spellValue.Key.Equals(spellKey))
                 {
                     return spellValue;
+                }
+            }
+            return null;
+        }
+
+        public string GetRuneDataIcon(int runeId)
+        {
+            foreach (RuneData runeData in runeDataList)
+            {
+                if (runeData.Id.Equals(runeId))
+                {
+                    return runeData.Icon;
+                }
+                else
+                {
+                    GetRune(runeId, runeData);
+                }
+            }
+            return null;
+        }
+
+        public string GetRune(int runeId, RuneData runeData)
+        {            
+            foreach (List<Rune> runeList in runeData.Data.Values)
+            {
+                foreach (Rune runeValue in runeList)
+                {
+                    if (runeValue.Id.Equals(runeId))
+                    {
+                        return runeValue.Icon;
+                    }
                 }
             }
             return null;
