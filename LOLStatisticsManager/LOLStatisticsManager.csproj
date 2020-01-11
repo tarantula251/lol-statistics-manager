@@ -73,6 +73,7 @@
     <Compile Include="Model\DTO\ChampionData.cs" />
     <Compile Include="Model\DTO\Rune.cs" />
     <Compile Include="Model\DTO\RuneData.cs" />
+    <Compile Include="Model\DTO\SlotData.cs" />
     <Compile Include="Model\DTO\SpellData.cs" />
     <Compile Include="Model\DTO\ChampionMasteryDTO.cs" />
     <Compile Include="Model\DTO\LeagueEntryDTO.cs" />

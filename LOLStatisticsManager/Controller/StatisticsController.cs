@@ -99,7 +99,12 @@ namespace LOLStatisticsManager.Model
                 championOnLaneStat.TopItem6 = participantStats.Item6;
                 championOnLaneStat.TopSpell1 = participant.Spell1Id;
                 championOnLaneStat.TopSpell2 = participant.Spell2Id;
-                championOnLaneStat.TopRunes = participant.Runes;
+                championOnLaneStat.TopRune0 = participantStats.Perk0;
+                championOnLaneStat.TopRune1 = participantStats.Perk1;
+                championOnLaneStat.TopRune2 = participantStats.Perk2;
+                championOnLaneStat.TopRune3 = participantStats.Perk3;
+                championOnLaneStat.TopRune4 = participantStats.Perk4;
+                championOnLaneStat.TopRune5 = participantStats.Perk5;
             }
 
             foreach(var statPair in championOnLaneMap)

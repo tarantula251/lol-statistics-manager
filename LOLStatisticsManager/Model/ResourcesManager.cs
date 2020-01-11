@@ -22,7 +22,7 @@ namespace LOLStatisticsManager.Model
 
         private SpellData spellData;
 
-        private List<RuneData> runeDataList;
+        private List<RuneData> runeList;
         string ResourcesUrl { get; set; }        
 
         private Dictionary<string, string> routingValuesMap = new Dictionary<string, string>() {
@@ -76,7 +76,7 @@ namespace LOLStatisticsManager.Model
 
             if (httpResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                runeDataList = JsonConvert.DeserializeObject<List<RuneData>>(resultContent);
+                runeList = JsonConvert.DeserializeObject<List<RuneData>>(resultContent);
             }
         }
 
@@ -114,7 +114,6 @@ namespace LOLStatisticsManager.Model
                 case "rune":
                     {
                         iconUrl = ResourcesUrl + "/img/" + iconId;
-                        Console.WriteLine("iconUrl " + iconUrl);
                         break;
                     }
             }
@@ -205,29 +204,32 @@ namespace LOLStatisticsManager.Model
 
         public string GetRuneDataIcon(int runeId)
         {
-            foreach (RuneData runeData in runeDataList)
+            string runeIcon = null;
+            foreach (RuneData runeData in runeList)
             {
                 if (runeData.Id.Equals(runeId))
                 {
-                    return runeData.Icon;
+                    runeIcon = runeData.Icon;
                 }
                 else
                 {
-                    GetRune(runeId, runeData);
+                    runeIcon = GetRune(runeId, runeData);
                 }
+                if (runeIcon != null) break;
             }
-            return null;
+
+            return runeIcon;
         }
 
         public string GetRune(int runeId, RuneData runeData)
         {            
-            foreach (List<Rune> runeList in runeData.Data.Values)
+            foreach (SlotData slotData in runeData.Slots)
             {
-                foreach (Rune runeValue in runeList)
+                foreach(Rune rune in slotData.Runes)
                 {
-                    if (runeValue.Id.Equals(runeId))
+                    if (rune.Id.Equals(runeId))
                     {
-                        return runeValue.Icon;
+                        return rune.Icon;
                     }
                 }
             }

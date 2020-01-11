@@ -3,10 +3,15 @@ using LOLStatisticsManager.Model;
 using LOLStatisticsManager.Model.DTO;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace LOLStatisticsManager
 {
@@ -37,6 +42,7 @@ namespace LOLStatisticsManager
         {
             RiotAPIController controller = new RiotAPIController(Region, SearchTerm);
             StatisticsController statsController = new StatisticsController(controller, SearchTerm);
+            statsController.CachingEnabled = false;
 
             //summoner section
             Dictionary<string, string> summonerData = statsController.GetSummonerData();
@@ -90,47 +96,40 @@ namespace LOLStatisticsManager
 
                 //create a list of top runes image sources
                 var topRunesImageSources = new List<ImageSource>();
-                List<RuneDTO> runesList = stat.TopRunes;
-                if (runesList != null && runesList.Count > 0)
-                {
-                    RuneDTO rune1 = runesList[0];
-                    RuneDTO rune2 = runesList[1];
-                    Console.WriteLine("rune1 RuneId " + rune1.RuneId.ToString());
-                    Console.WriteLine("rune1 Rank " + rune1.Rank.ToString());
-
-                    Console.WriteLine("rune2 RuneId " + rune2.RuneId.ToString());
-                    Console.WriteLine("rune2 Rank " + rune2.Rank.ToString());
-                    string topRune1Icon = (rune1 != null && !rune1.RuneId.Equals(0)) ? resourcesManager.GetRuneDataIcon(rune1.RuneId) : null;
-                    string topRune2Icon = (rune2 != null && !rune2.RuneId.Equals(0)) ? resourcesManager.GetRuneDataIcon(rune2.RuneId) : null;
-
-                    if (topRune1Icon != null && topRune2Icon != null)
-                    {
-                        topRunesImageSources.Add(resourcesManager.GetIcon(topRune1Icon, "rune"));
-                        topRunesImageSources.Add(resourcesManager.GetIcon(topRune2Icon, "rune"));
-                    }
-                }
+                string topRune0Icon = (!stat.TopRune0.Equals(0)) ? resourcesManager.GetRuneDataIcon(stat.TopRune0) : null;
+                string topRune1Icon = (!stat.TopRune1.Equals(0)) ? resourcesManager.GetRuneDataIcon(stat.TopRune1) : null;
+                string topRune2Icon = (!stat.TopRune2.Equals(0)) ? resourcesManager.GetRuneDataIcon(stat.TopRune2) : null;
+                string topRune3Icon = (!stat.TopRune3.Equals(0)) ? resourcesManager.GetRuneDataIcon(stat.TopRune3) : null;
+                string topRune4Icon = (!stat.TopRune4.Equals(0)) ? resourcesManager.GetRuneDataIcon(stat.TopRune4) : null;
+                string topRune5Icon = (!stat.TopRune5.Equals(0)) ? resourcesManager.GetRuneDataIcon(stat.TopRune5) : null;
+                if (topRune0Icon != null) topRunesImageSources.Add(resourcesManager.GetIcon(topRune0Icon, "rune"));
+                if (topRune1Icon != null) topRunesImageSources.Add(resourcesManager.GetIcon(topRune1Icon, "rune"));
+                if (topRune2Icon != null) topRunesImageSources.Add(resourcesManager.GetIcon(topRune2Icon, "rune"));
+                if (topRune3Icon != null) topRunesImageSources.Add(resourcesManager.GetIcon(topRune3Icon, "rune"));
+                if (topRune4Icon != null) topRunesImageSources.Add(resourcesManager.GetIcon(topRune4Icon, "rune"));
+                if (topRune5Icon != null) topRunesImageSources.Add(resourcesManager.GetIcon(topRune5Icon, "rune"));
 
                 //create a list of top items image sources
-                var topItemsImageSources = new List<ImageSource>(); 
+                var topItemsImageSources = new List<ImageSource>();
                 if (!stat.TopItem0.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem0.ToString(), "item"));
                 if (!stat.TopItem1.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem1.ToString(), "item"));
                 if (!stat.TopItem2.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem2.ToString(), "item"));
                 if (!stat.TopItem3.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem3.ToString(), "item"));
                 if (!stat.TopItem4.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem4.ToString(), "item"));
                 if (!stat.TopItem5.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem5.ToString(), "item"));
-                if (!stat.TopItem6.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem6.ToString(), "item"));                                
-
+                if (!stat.TopItem6.Equals(0)) topItemsImageSources.Add(resourcesManager.GetIcon(stat.TopItem6.ToString(), "item"));
+                
                 ChampionInfo info = new ChampionInfo
                 {
                     Name = champion.Name,
                     Lane = stat.Lane,
-                    PickPercent = stat.PickPercent.ToString(),
-                    WinPercent = stat.WinPercent.ToString(),
-                    KDA = stat.KillsAvg + "/" + stat.DeathsAvg + "/" + stat.AssistsAvg,
+                    PickPercent = Math.Round(stat.PickPercent, 2).ToString(),
+                    WinPercent = Math.Round(stat.WinPercent, 2).ToString(),
+                    KDA = Math.Round(stat.KillsAvg, 2) + "/" + Math.Round(stat.DeathsAvg, 2) + "/" + Math.Round(stat.AssistsAvg, 2),
                     TotalDamageDealtAvgPerMin = stat.TotalDamageDealtAvgPerMin.ToString(),
                     GoldEarnedAvgPerMin = stat.GoldEarnedAvgPerMin.ToString(),
                     MinionsKilledAvgPerMin = stat.MinionsKilledAvgPerMin.ToString(),
-                    FirstBloodParticipationPercent = stat.FirstBloodParticipationPercent.ToString(),
+                    FirstBloodParticipationPercent = Math.Round(stat.FirstBloodParticipationPercent, 2).ToString(),
                     ChampionIconSource = resourcesManager.GetIcon(champion.Id, "champion"),
                     TopItemsIconSource = topItemsImageSources,
                     TopSpellsIconSource = topSpellsImageSources,
