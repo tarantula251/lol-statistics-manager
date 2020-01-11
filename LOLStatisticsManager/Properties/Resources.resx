@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="RiotAPIKey" xml:space="preserve">
-    <value>RGAPI-e240d333-4b66-4ed7-a621-2681f925bf42</value>
+    <value>RGAPI-90e964a3-77db-44f1-b7ac-94ebb71fcc84</value>
     <comment>Temporary key - must be updated</comment>
   </data>
 </root>

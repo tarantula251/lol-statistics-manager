@@ -42,12 +42,27 @@ namespace LOLStatisticsManager.Model
             result = new List<ChampionOnLaneStat>();
 
             Dictionary<string, Tuple<int, ChampionOnLaneStat>> championOnLaneMap = new Dictionary<string, Tuple<int, ChampionOnLaneStat>>();
+            Dictionary<string, Dictionary<int, int>> championOnLaneItems = new Dictionary<string, Dictionary<int, int>>();
             MatchlistDTO matchList = RiotApiController.GetMatchlistByAccount(AccountId);
             int matchesInCurrentSeason = 0;
             foreach(var matchReference in matchList.Matches)
             {
                 if (matchReference.Season != 13) continue;
                 ++matchesInCurrentSeason;
+                MatchDTO match = RiotApiController.GetMatchEntryByMatch(matchReference.GameId);
+                if (match == null) continue;
+                var participantIdentity = match.ParticipantIdentities.Find((ParticipantIdentityDTO x) =>
+                {
+                    return x.Player.SummonerId == SummonerId;
+                });
+                if (participantIdentity == null) continue;
+
+                var participant = match.Participants.Find((ParticipantDTO x) =>
+                {
+                    return x.ParticipantId == participantIdentity.ParticipantId;
+                });
+                if (participant == null) continue;
+
                 ChampionOnLaneStat championOnLaneStat;
                 string key = matchReference.Lane + matchReference.Champion;
                 if (championOnLaneMap.ContainsKey(key))
@@ -64,19 +79,6 @@ namespace LOLStatisticsManager.Model
                     championOnLaneStat.Lane = matchReference.Lane;
                     championOnLaneMap.Add(key, new Tuple<int, ChampionOnLaneStat>(1, championOnLaneStat));
                 }
-                MatchDTO match = RiotApiController.GetMatchEntryByMatch(matchReference.GameId);
-                if (match == null) continue;
-                var participantIdentity = match.ParticipantIdentities.Find((ParticipantIdentityDTO x) =>
-                {
-                    return x.Player.SummonerId == SummonerId;
-                });
-                if (participantIdentity == null) continue;
-
-                var participant = match.Participants.Find((ParticipantDTO x) =>
-                {
-                    return x.ParticipantId == participantIdentity.ParticipantId;
-                });
-                if (participant == null) continue;
 
                 var participantStats = participant.Stats;
 
@@ -90,13 +92,26 @@ namespace LOLStatisticsManager.Model
                 championOnLaneStat.GoldEarnedAvgPerMin += participantStats.GoldEarned / gameDurationInMinutes;
                 championOnLaneStat.MinionsKilledAvgPerMin += participantStats.TotalMinionsKilled / gameDurationInMinutes;
                 if (participantStats.FirstBloodAssist || participantStats.FirstBloodKill) championOnLaneStat.FirstBloodParticipationPercent += 1.0f;
-                championOnLaneStat.TopItem0 = participantStats.Item0;
-                championOnLaneStat.TopItem1 = participantStats.Item1;
-                championOnLaneStat.TopItem2 = participantStats.Item2;
-                championOnLaneStat.TopItem3 = participantStats.Item3;
-                championOnLaneStat.TopItem4 = participantStats.Item4;
-                championOnLaneStat.TopItem5 = participantStats.Item5;
-                championOnLaneStat.TopItem6 = participantStats.Item6;
+                if(!championOnLaneItems.ContainsKey(key)) championOnLaneItems.Add(key, new Dictionary<int, int>());
+
+                if (championOnLaneItems[key].ContainsKey(participantStats.Item0)) championOnLaneItems[key][participantStats.Item0] += 1;
+                else championOnLaneItems[key].Add(participantStats.Item0, 1);
+
+                if (championOnLaneItems[key].ContainsKey(participantStats.Item1)) championOnLaneItems[key][participantStats.Item1] += 1;
+                else championOnLaneItems[key].Add(participantStats.Item1, 1);
+
+                if (championOnLaneItems[key].ContainsKey(participantStats.Item2)) championOnLaneItems[key][participantStats.Item2] += 1;
+                else championOnLaneItems[key].Add(participantStats.Item2, 1);
+
+                if (championOnLaneItems[key].ContainsKey(participantStats.Item3)) championOnLaneItems[key][participantStats.Item3] += 1;
+                else championOnLaneItems[key].Add(participantStats.Item3, 1);
+
+                if (championOnLaneItems[key].ContainsKey(participantStats.Item4)) championOnLaneItems[key][participantStats.Item4] += 1;
+                else championOnLaneItems[key].Add(participantStats.Item4, 1);
+
+                if (championOnLaneItems[key].ContainsKey(participantStats.Item5)) championOnLaneItems[key][participantStats.Item5] += 1;
+                else championOnLaneItems[key].Add(participantStats.Item5, 1);
+
                 championOnLaneStat.TopSpell1 = participant.Spell1Id;
                 championOnLaneStat.TopSpell2 = participant.Spell2Id;
                 championOnLaneStat.TopRune0 = participantStats.Perk0;
@@ -111,6 +126,39 @@ namespace LOLStatisticsManager.Model
             {
                 var stat = statPair.Value.Item2;
                 int count = statPair.Value.Item1;
+                List<KeyValuePair<int, int>> statItemsList = new List<KeyValuePair<int, int>>(championOnLaneItems[statPair.Key]);
+                statItemsList.Sort(
+                        delegate (
+                        KeyValuePair<int, int> pair1,
+                        KeyValuePair<int, int> pair2)
+                        {
+                            if (pair1.Key == 0) return 1;
+                            return pair1.Value.CompareTo(pair2.Value) * -1;
+                        });
+                try 
+                {
+                    stat.TopItem0 = statItemsList[0].Key;
+                    try
+                    {
+                        stat.TopItem1 = statItemsList[1].Key;
+                        try 
+                        { 
+                            stat.TopItem2 = statItemsList[2].Key;
+                            try 
+                            { 
+                                stat.TopItem3 = statItemsList[3].Key;
+                                try { 
+                                    stat.TopItem4 = statItemsList[4].Key;
+                                    try 
+                                    { 
+                                        stat.TopItem5 = statItemsList[5].Key; 
+                                    } catch (ArgumentOutOfRangeException ex) { }
+                                } catch (ArgumentOutOfRangeException ex) { }
+                            } catch (ArgumentOutOfRangeException ex) { }
+                        } catch (ArgumentOutOfRangeException ex) { }
+                    } catch (ArgumentOutOfRangeException ex) { }
+                } catch (ArgumentOutOfRangeException ex) { }
+
                 stat.PickPercent = ((float)count / matchesInCurrentSeason) * 100.0f;
                 stat.KillsAvg /= count;
                 stat.DeathsAvg /= count;
