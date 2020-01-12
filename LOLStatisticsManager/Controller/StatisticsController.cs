@@ -279,10 +279,6 @@ namespace LOLStatisticsManager.Model
                 { "matches", matchReferenceList }
             };
 
-            Console.WriteLine("1 " + resultMap["totalGames"]);
-            Console.WriteLine("1 " + resultMap["startIndex"]);
-            Console.WriteLine("1 " + resultMap["endIndex"]);
-
             return resultMap;
         }
 
@@ -315,16 +311,6 @@ namespace LOLStatisticsManager.Model
 
                 Dictionary<string, object> testParticipant = participantsList[0];
                 Dictionary<string, object> test = (Dictionary<string, object>)testParticipant["player"];
-                Console.WriteLine("1 " + test["currentPlatformId"]);
-                Console.WriteLine("1 " + test["summonerName"]);
-                Console.WriteLine("1 " + test["matchHistoryUri"]);
-                Console.WriteLine("1 " + test["platformId"]);
-                Console.WriteLine("1 " + test["currentAccountId"]);
-                Console.WriteLine("1 " + test["profileIcon"]);
-                Console.WriteLine("1 " + test["summonerId"]);
-                Console.WriteLine("1 " + test["accountId"]);
-                Console.WriteLine("1 " + testParticipant["participantId"]);
-                Console.WriteLine("----------------");
             }
 
             return participantsList;
@@ -415,7 +401,6 @@ namespace LOLStatisticsManager.Model
             {
                 { "firstBloodAssist", participantStats.FirstBloodAssist },
                 { "visionScore", participantStats.VisionScore }
-                // ... to be continued
 
             };
             return resultMap;

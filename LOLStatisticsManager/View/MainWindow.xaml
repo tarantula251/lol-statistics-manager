@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"       
         xmlns:local="clr-namespace:LOLStatisticsManager"
         mc:Ignorable="d"
-        Title="League of Legends Statistics Manager" Height="600" Width="800" Background="#FF242337" ResizeMode="NoResize">
+        Title="League of Legends Statistics Manager" Height="780" Width="830" Background="#FF242337" ResizeMode="NoResize">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Frame x:Name="frame" NavigationUIVisibility="Hidden" Loaded="MainWindow_Loaded"/>
     </ScrollViewer>

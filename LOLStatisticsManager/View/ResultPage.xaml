@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LOLStatisticsManager"
       mc:Ignorable="d" d:DesignWidth="800"
-      Title="ResultPage" Loaded="ResultPage_Loaded" Height="1000">
+      Title="ResultPage" Loaded="ResultPage_Loaded" Height="710">
 
     <Grid>
         <Grid x:Name="mainGrid" VerticalAlignment="Top">
@@ -83,7 +83,7 @@
             <Label x:Name="flexNotRanked" Content="NOT RANKED FLEX" Grid.Column="2" Margin="42.4,100,0,0" Foreground="#FF473A71" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Opacity="0.7" Visibility="Hidden"/>
         </Grid>
 
-        <DataGrid x:Name="championGrid" Grid.Row="0" Margin="0,200,0,100" VerticalAlignment="Top" MaxWidth="600" AutoGenerateColumns="False" CanUserAddRows="false" IsReadOnly="true" CanUserDeleteRows="False">
+        <DataGrid x:Name="championGrid" Grid.Row="0" Margin="0,200,0,0" VerticalAlignment="Top" MaxWidth="600" Height="420" AutoGenerateColumns="False" CanUserAddRows="false" IsReadOnly="true" CanUserDeleteRows="False" ScrollViewer.CanContentScroll="False">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="PreviewMouseLeftButtonDown" Handler="OnMouseDown"/>
@@ -232,7 +232,7 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
-        <Grid x:Name="returnGrid" HorizontalAlignment="Center" Margin="0,100,0,30" VerticalAlignment="Bottom">
+        <Grid x:Name="returnGrid" HorizontalAlignment="Center" Margin="0,0,0,15" VerticalAlignment="Bottom">
             <Button x:Name="returnBtn" Content="RETURN" FontWeight="Bold" FontSize="24" Foreground="White" Width="150" Height="43" Margin="50,50,50,0" BorderBrush="#FFBC115B" Background="#FFBC115B" Click="returnBtn_Click" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
     </Grid>
