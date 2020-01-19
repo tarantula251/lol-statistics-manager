@@ -54,17 +54,28 @@ namespace LOLStatisticsManager
 
             //league section
             List<Dictionary<string, string>> leagueEntryList = statsController.GetLeagueEntryData();
+            List<String> ranksList = new List<String>();
             if (leagueEntryList != null && leagueEntryList.Count > 0)
             {
                 foreach (Dictionary<string, string> entryDictionary in leagueEntryList)
                 {
                     DisplayLeagueEntryImage(entryDictionary["tier"].ToLower(), entryDictionary["rankType"]);
                     DisplayLeagueEntryData(entryDictionary);
+                    ranksList.Add(entryDictionary["rankType"]);
                 }
             }
             else
             {
-                DisplayNoRankDataLabels();
+                DisplayNoRankDataLabels(RankFlex);
+                DisplayNoRankDataLabels(RankSolo);
+            }
+            if (ranksList != null && ranksList.Count > 0 && ranksList.Contains(RankSolo) && !ranksList.Contains(RankFlex))
+            {
+                DisplayNoRankDataLabels(RankFlex);
+            }
+            else if (ranksList != null && ranksList.Count > 0 && !ranksList.Contains(RankSolo) && ranksList.Contains(RankFlex))
+            {
+                DisplayNoRankDataLabels(RankSolo);
             }
 
             var championOnLaneStats = statsController.GetChampionOnLaneStats();
@@ -195,12 +206,18 @@ namespace LOLStatisticsManager
             }
         }
 
-        private void DisplayNoRankDataLabels()
+        private void DisplayNoRankDataLabels(String rankType)
         {
-            mainGrid.Children.Remove(this.soloGrid);
-            mainGrid.Children.Remove(this.flexGrid);
-            soloNotRanked.Visibility = Visibility.Visible;
-            flexNotRanked.Visibility = Visibility.Visible;
+            if (rankType.Equals(RankSolo))
+            {
+                mainGrid.Children.Remove(this.soloGrid);
+                soloNotRanked.Visibility = Visibility.Visible;
+            }
+            else if (rankType.Equals(RankFlex))
+            {
+                mainGrid.Children.Remove(this.flexGrid);
+                flexNotRanked.Visibility = Visibility.Visible;
+            }
         }
 
         private void returnBtn_Click(object sender, System.Windows.RoutedEventArgs e)

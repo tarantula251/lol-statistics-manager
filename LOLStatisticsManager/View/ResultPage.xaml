@@ -148,21 +148,7 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <HierarchicalDataTemplate>
-                                            <Image Source="{Binding}" x:Name="topItemIconContainer" Width="61" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill"
-                                                        ToolTipService.InitialShowDelay="500"
-                                                        ToolTipService.ShowDuration="7000"
-                                                        ToolTipService.BetweenShowDelay="1000"
-                                                        ToolTipService.Placement="Right" 
-                                                        ToolTipService.PlacementRectangle="50,0,0,0"
-                                                        ToolTipService.HorizontalOffset="10" 
-                                                        ToolTipService.VerticalOffset="10"
-                                                        ToolTipService.HasDropShadow="false"
-                                                        ToolTipService.ShowOnDisabled="true" 
-                                                        ToolTipService.IsEnabled="true">
-                                                <Image.ToolTip>
-                                                    <TextBlock Text="AAA" Height="10" Width="20" FontSize="8"/>
-                                                </Image.ToolTip>
-                                            </Image>
+                                            <Image Source="{Binding}" x:Name="topItemIconContainer" Width="61" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill"></Image>
                                         </HierarchicalDataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -178,21 +164,7 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <HierarchicalDataTemplate>
-                                            <Image Source="{Binding}" x:Name="topSpellIconContainer" Width="61" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill"
-                                                        ToolTipService.InitialShowDelay="1000"
-                                                        ToolTipService.ShowDuration="7000"
-                                                        ToolTipService.BetweenShowDelay="2000"
-                                                        ToolTipService.Placement="Right" 
-                                                        ToolTipService.PlacementRectangle="50,0,0,0"
-                                                        ToolTipService.HorizontalOffset="10" 
-                                                        ToolTipService.VerticalOffset="10"
-                                                        ToolTipService.HasDropShadow="false"
-                                                        ToolTipService.ShowOnDisabled="true" 
-                                                        ToolTipService.IsEnabled="true">
-                                                <Image.ToolTip>
-                                                    <TextBlock Text="BBB" Height="10" Width="20" FontSize="8"/>
-                                                </Image.ToolTip>
-                                            </Image>
+                                            <Image Source="{Binding}" x:Name="topSpellIconContainer" Width="61" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill"></Image>
                                         </HierarchicalDataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -208,21 +180,7 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <HierarchicalDataTemplate>
-                                            <Image Source="{Binding}" x:Name="topSpellIconContainer" Width="63" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill"
-                                                        ToolTipService.InitialShowDelay="1000"
-                                                        ToolTipService.ShowDuration="7000"
-                                                        ToolTipService.BetweenShowDelay="2000"
-                                                        ToolTipService.Placement="Right" 
-                                                        ToolTipService.PlacementRectangle="50,0,0,0"
-                                                        ToolTipService.HorizontalOffset="10" 
-                                                        ToolTipService.VerticalOffset="10"
-                                                        ToolTipService.HasDropShadow="false"
-                                                        ToolTipService.ShowOnDisabled="true" 
-                                                        ToolTipService.IsEnabled="true">
-                                                <Image.ToolTip>
-                                                    <TextBlock Text="CCC" Height="10" Width="20" FontSize="8"/>
-                                                </Image.ToolTip>
-                                            </Image>
+                                            <Image Source="{Binding}" x:Name="topSpellIconContainer" Width="63" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill"></Image>
                                         </HierarchicalDataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
